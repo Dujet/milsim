@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 2640490094319402162}
   - component: {fileID: 5174099764085262765}
   - component: {fileID: 7324392710325122487}
-  - component: {fileID: 2979186823515842374}
   m_Layer: 6
   m_Name: Unit
   m_TagString: WARSAW
@@ -34,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 3232583877994827685}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.37, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -203,24 +202,7 @@ MonoBehaviour:
     m_Bits: 64
   visibleTargets: []
   scanFrequency: 5
-  showDebugGizmos: 1
---- !u!114 &2979186823515842374
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3232583877994827685}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 916e92d1d9a3906428352e3b3f0d2631, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  terrainSizeX: 1000
-  terrainSizeZ: 1000
-  squad: []
-  direction: 1
-  goStraight: 1
+  showDebugGizmos: 0
 --- !u!1 &8770004586706642798
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,6 +212,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7294766184832418560}
+  - component: {fileID: 250766161046031150}
   m_Layer: 0
   m_Name: UnitPrototype
   m_TagString: Untagged
@@ -253,3 +236,19 @@ Transform:
   - {fileID: 5355774954224879449}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &250766161046031150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8770004586706642798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 916e92d1d9a3906428352e3b3f0d2631, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terrainSizeX: 1000
+  terrainSizeZ: 1000
+  direction: 1
+  goStraight: 1

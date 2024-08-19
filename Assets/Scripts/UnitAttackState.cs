@@ -16,7 +16,7 @@ public class UnitAttackState : IUnitState
     
     public void Enter()
     {
-        Debug.Log("Entering Attack State");
+        Debug.Log($"{aiStateManager.gameObject.name}:Entering Attack State");
         aiStateManager.agent.ResetPath();
     }
 
@@ -50,7 +50,7 @@ public class UnitAttackState : IUnitState
 
     public void Exit()
     {
-        Debug.Log("Exiting Attack State");
+        Debug.Log($"{aiStateManager.gameObject.name}:Exiting Attack State");
     }
 
     // TODO: test if spam fixed
@@ -62,7 +62,7 @@ public class UnitAttackState : IUnitState
         if (targetHealth.IsDead) return false;
 
         this.target = target;
-        Debug.Log("Target successfully changed");
+        Debug.Log($"{aiStateManager.gameObject.name}:Target successfully changed to {target.gameObject.name}");
         return true;
     }
 }

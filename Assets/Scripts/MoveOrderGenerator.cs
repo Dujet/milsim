@@ -21,8 +21,8 @@ public class MoveOrderGenerator : MonoBehaviour
 
     [SerializeField] private int terrainSizeX;
     [SerializeField] private int terrainSizeZ;
-    [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private Grid grid;
+    private NavMeshAgent agent;
+    private Grid grid;
     private Vector3 targetPosition;
     private Vector3Int targetCell;
     private Vector3Int currentCell;
@@ -41,6 +41,8 @@ public class MoveOrderGenerator : MonoBehaviour
         gridSizeX = terrainSizeX / (int)grid.cellSize.x;
         currentCell = grid.WorldToCell(transform.position);
         targetCell = currentCell;
+        agent = GetComponent<NavMeshAgent>();
+        grid = GameObject.Find("Grid").GetComponent<Grid>();
         //advanceToNextCell();
     }
 

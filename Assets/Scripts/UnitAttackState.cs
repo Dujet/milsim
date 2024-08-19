@@ -41,7 +41,7 @@ public class UnitAttackState : IUnitState
         if (!targetHealth.IsDead) return;
         
         if (!changeTarget()) {
-            aiStateManager.ChangeState(new UnitPatrolState(aiStateManager, aiStateManager.IsFollower));
+            aiStateManager.ChangeState(new UnitPatrolState(aiStateManager));
         }
         
 

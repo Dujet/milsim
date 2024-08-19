@@ -10,6 +10,7 @@ public class UnitDeathState : IUnitState
         this.aiStateManager = aIStateManager;
     }
 
+    // TODO: change squad leader if the leader dies
     public void Enter()
     {
         Debug.Log("Bro died");

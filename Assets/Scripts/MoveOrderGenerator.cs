@@ -32,7 +32,9 @@ public class MoveOrderGenerator : MonoBehaviour
     [SerializeField] private MoveOrderDirection direction;
     [SerializeField] private bool goStraight = false;
 
-
+    public List<NavMeshAgent> Squad {
+        get { return squad; }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -85,6 +87,7 @@ public class MoveOrderGenerator : MonoBehaviour
         }
     }
 
+    // TODO: possibly move squad orders to separate SquadManager class on unit group object
     private void generateSquadOrders(Ray rootRay) {
         Vector3 rayOrigin;
         Vector3 rayDirection = rootRay.direction;

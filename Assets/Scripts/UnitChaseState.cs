@@ -25,7 +25,7 @@ public class UnitChaseState : IUnitState
             aiStateManager.ChangeState(new UnitPatrolState(aiStateManager));
         }
 
-        if (Vector3.Distance(aiStateManager.transform.position, target.position) <= aiStateManager.AttackRange) {
+        if (Vector3.Distance(aiStateManager.transform.position, target.position) <= aiStateManager.AttackRange*0.8) {
             aiStateManager.ChangeState(new UnitAttackState(aiStateManager, target));
         }
 

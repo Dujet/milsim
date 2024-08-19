@@ -15,6 +15,7 @@ enum MoveOrderDirection {
     BACKWARD = -1
 }
 
+// TODO: probably move this onto the squad object
 [RequireComponent(typeof(NavMeshAgent))]
 public class MoveOrderGenerator : MonoBehaviour
 {
@@ -39,12 +40,14 @@ public class MoveOrderGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
+        grid = GameObject.Find("Grid").GetComponent<Grid>();
+        
         gridSizeZ = terrainSizeZ / (int)grid.cellSize.z;
         gridSizeX = terrainSizeX / (int)grid.cellSize.x;
         currentCell = grid.WorldToCell(transform.position);
         targetCell = currentCell;
-        agent = GetComponent<NavMeshAgent>();
-        grid = GameObject.Find("Grid").GetComponent<Grid>();
+        
         //advanceToNextCell();
     }
 
@@ -114,6 +117,7 @@ public class MoveOrderGenerator : MonoBehaviour
     }
 
     private void OnDrawGizmos() {
+        if (!Application.isPlaying) return;
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(targetPosition, agent.stoppingDistance*5);
 

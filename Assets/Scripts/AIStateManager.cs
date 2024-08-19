@@ -46,18 +46,15 @@ public class AIStateManager : MonoBehaviour
 
     void LateUpdate()
     {
-        currentState.Execute();
+        currentState?.Execute();
     }
 
     public void ChangeState(IUnitState newState)
     {
-        if (currentState != null)
-        {
-            currentState.Exit();
-        }
 
+        currentState?.Exit();
         currentState = newState;
-        currentState.Enter();
+        currentState?.Enter();
     }
 
     public List<AIStateManager> GetSquadMembers() {

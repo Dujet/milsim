@@ -20,7 +20,9 @@ public class UnitPatrolState : IUnitState
     // TODO: change states of squad members to chase when a target is found
     public void Execute()
     {
-        if (!aiStateManager.moveOrderGenerator.hasPath() && !aiStateManager.IsFollower){
+        if (aiStateManager == null) return;
+
+        if (!(aiStateManager.moveOrderGenerator?.hasPath() ?? true) && !aiStateManager.IsFollower){
             Debug.Log("Patrol State: generating new path");
             aiStateManager.moveOrderGenerator.generateMoveOrders();
         }

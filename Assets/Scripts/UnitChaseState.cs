@@ -17,6 +17,7 @@ public class UnitChaseState : IUnitState
         aiStateManager.agent.SetDestination(target.position);
     }
 
+    // TODO: occasionally update navmesh destination
     public void Execute()
     {
         //Debug.Log("Executing Chase State");

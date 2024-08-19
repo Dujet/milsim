@@ -7,6 +7,7 @@ public class UnitAttackState : IUnitState
 {
     private readonly AIStateManager aiStateManager;
     private Transform target;
+    private Health targetHealth;
 
     public UnitAttackState(AIStateManager aiStateManager, Transform target)
     {
@@ -18,34 +19,44 @@ public class UnitAttackState : IUnitState
     {
         Debug.Log($"{aiStateManager.gameObject.name}:Entering Attack State");
         aiStateManager.agent.ResetPath();
+        targetHealth = target.GetComponent<Health>();
     }
 
     public void Execute()
     {
         // Debug.Log("Executing Attack State");
 
-        // If the target is not visible or out of range, change to chase state
-        // TODO: add health check so that the unit doesn't chase a dead target
-        if (!aiStateManager.fov.IsTargetVisible(target) ||
+        // If the (alive) target is not visible or out of range, change to chase state
+        if ((!aiStateManager.fov.IsTargetVisible(target) ||
             Vector3.Distance(aiStateManager.transform.position, target.position) > aiStateManager.AttackRange)
+            && !targetHealth.IsDead)
         {
             aiStateManager.ChangeState(new UnitChaseState(aiStateManager, target));
         }
 
-        //
-        //
-        // Add attack logic here
+        // If the target is dead, try to find a new target or start patrolling
+        if (targetHealth.IsDead) {
+            if (!updateTarget()) {
+                aiStateManager.ChangeState(new UnitPatrolState(aiStateManager));
+            }
+            return;
+        }
+
+        // Attack the target
         bool fired = aiStateManager.Weapon.CanAttack();
         aiStateManager.Weapon.Fire(target);
+        if (fired) {
+            Debug.Log($"{aiStateManager.gameObject.name}:Attacking {target.gameObject.name}");
+        }
 
-        Health targetHealth = target.GetComponent<Health>();
+        // If the target is still alive, return
         if (!targetHealth.IsDead) return;
         
-        if (!changeTarget()) {
+        // After successful kill, find a new target or start patrolling
+        if (!updateTarget()) {
             aiStateManager.ChangeState(new UnitPatrolState(aiStateManager));
         }
-        
-
+    
     }
 
     public void Exit()
@@ -54,15 +65,17 @@ public class UnitAttackState : IUnitState
     }
 
     // TODO: test if spam fixed
-    private bool changeTarget() {
-        Transform target = aiStateManager.fov.GetClosestTarget();
-        if (target == null || target == this.target) return false;
+    // Get the closest target in the field of view
+    private bool updateTarget() {
+        Transform newTarget = aiStateManager.fov.GetClosestTarget();
+        if (newTarget == null || newTarget == target) return false;
 
-        Health targetHealth = target.GetComponent<Health>();
-        if (targetHealth.IsDead) return false;
+        Health newTargetHealth = target.GetComponent<Health>();
+        if (newTargetHealth.IsDead) return false;
 
-        this.target = target;
-        Debug.Log($"{aiStateManager.gameObject.name}:Target successfully changed to {target.gameObject.name}");
+        target = newTarget;
+        targetHealth = newTargetHealth;
+        Debug.Log($"{aiStateManager.gameObject.name}:Target changed to {target.gameObject.name}");
         return true;
     }
 }

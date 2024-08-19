@@ -12,7 +12,7 @@ public class FieldOfView : MonoBehaviour
     public float viewRadius;
     public LayerMask obstacleMask;
     public LayerMask targetMask;
-    public List<Transform> visibleTargets = new List<Transform>();
+    public List<Transform> visibleTargets = new List<Transform>(); // contains visible enemy targets which are alive
 
     [SerializeField] private float scanFrequency = 5f;
     [SerializeField] private bool showDebugGizmos = true;
@@ -98,5 +98,17 @@ public class FieldOfView : MonoBehaviour
 
     public bool IsTargetVisible(Transform target) {
         return visibleTargets.Contains(target);
+    }
+
+    // NOTE: possible use case when visibleTargets is large or not updated
+    public bool IsTargetVisible2(Transform target) {
+        Vector3 dirToTarget = (target.position - transform.position).normalized;
+        if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2) {
+            float dstToTarget = Vector3.Distance(transform.position, target.position);
+            if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

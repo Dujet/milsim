@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Rendering;
 
 public class UnitAttackState : IUnitState
@@ -22,6 +23,7 @@ public class UnitAttackState : IUnitState
         targetHealth = target.GetComponent<Health>();
     }
 
+    // TODO: think of way to keep unit looking at target while attacking
     public void Execute()
     {
         // Debug.Log("Executing Attack State");

@@ -31,17 +31,25 @@ public class AIStateManager : MonoBehaviour
     
     public bool IsFollower {
         get { return isFollower; }
+        set { isFollower = value; }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        moveOrderGenerator = GetComponent<MoveOrderGenerator>();
+    void Awake() {
+        moveOrderGenerator = GetComponentInParent<MoveOrderGenerator>();
+        if (moveOrderGenerator == null) {
+            Debug.LogError("MoveOrderGenerator not found");
+        }
         currentState = new UnitPatrolState(this);
         agent = GetComponent<NavMeshAgent>();
         fov = GetComponent<FieldOfView>();
         weapon = GetComponent<Weapon>();
         attackRange = weapon.AttackRange;
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
     }
 
     void LateUpdate()

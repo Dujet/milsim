@@ -15,21 +15,19 @@ enum MoveOrderDirection {
     BACKWARD = -1
 }
 
-// TODO: probably move this onto the squad object
-[RequireComponent(typeof(NavMeshAgent))]
 public class MoveOrderGenerator : MonoBehaviour
 {
 
     [SerializeField] private int terrainSizeX;
     [SerializeField] private int terrainSizeZ;
-    private NavMeshAgent agent;
     private Grid grid;
     private Vector3 targetPosition;
     private Vector3Int targetCell;
     private Vector3Int currentCell;
     private int gridSizeZ;
     private int gridSizeX;
-    [SerializeField] private List<NavMeshAgent> squad;
+    private NavMeshAgent agent; // squad leader
+    private List<NavMeshAgent> squad;
     [SerializeField] private MoveOrderDirection direction;
     [SerializeField] private bool goStraight = false;
 
@@ -37,12 +35,24 @@ public class MoveOrderGenerator : MonoBehaviour
         get { return squad; }
     }
 
+    void Awake() {
+        grid = GameObject.Find("Grid").GetComponent<Grid>();
+        squad = new List<NavMeshAgent>(GetComponentsInChildren<NavMeshAgent>());
+    }   
+
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        grid = GameObject.Find("Grid").GetComponent<Grid>();
-        
+        // find squad leader in squad
+        List<AIStateManager> members = new List<AIStateManager>(GetComponentsInChildren<AIStateManager>());
+        foreach (AIStateManager member in members) {
+            if (!member.IsFollower) {
+                agent = member.agent;
+                squad.Remove(agent);
+                break;
+            }
+        }
+
         gridSizeZ = terrainSizeZ / (int)grid.cellSize.z;
         gridSizeX = terrainSizeX / (int)grid.cellSize.x;
         currentCell = grid.WorldToCell(transform.position);
@@ -63,13 +73,14 @@ public class MoveOrderGenerator : MonoBehaviour
     }
     
     public bool hasPath() {
+        if (agent == null) return false;
         return agent.hasPath || agent.pathPending;
     }
 
-    // TODO: fix bug where a cell is skipped on z axis
+    // TODO: check if exists bug where a cell is skipped on z axis
     private void advanceToNextCell() {
-        //currentCell = grid.WorldToCell(agent.transform.position);
-        currentCell = targetCell;
+        //currentCell = targetCell;
+        currentCell = grid.WorldToCell(agent.transform.position);
         int xOffset = Random.Range(-1, 2);
 
         if (goStraight || currentCell.x + xOffset < 0 || currentCell.x + xOffset >= terrainSizeX / grid.cellGap.x) {
@@ -90,7 +101,7 @@ public class MoveOrderGenerator : MonoBehaviour
         }
     }
 
-    // TODO: possibly move squad orders to separate SquadManager class on unit group object
+    // TODO: possibly move squad orders to separate SquadManager class on unit group object (strategy)
     private void generateSquadOrders(Ray rootRay) {
         Vector3 rayOrigin;
         Vector3 rayDirection = rootRay.direction;
@@ -116,8 +127,23 @@ public class MoveOrderGenerator : MonoBehaviour
         }
     }
 
+    public void ReplaceLeader(NavMeshAgent leader) {
+        squad.Remove(leader);
+        foreach (NavMeshAgent agent in squad) {
+            if (agent.GetComponent<AIStateManager>().IsFollower) {
+                agent.GetComponent<AIStateManager>().IsFollower = false;
+                this.agent = agent;
+                break;
+            }
+        }
+    }
+
+    public void RemoveSquadMember(NavMeshAgent member) {
+        squad.Remove(member);
+    }
+
     private void OnDrawGizmos() {
-        if (!Application.isPlaying) return;
+        if (!Application.isPlaying || agent == null) return;
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(targetPosition, agent.stoppingDistance*5);
 

@@ -22,11 +22,13 @@ public class UnitChaseState : IUnitState
     {
         //Debug.Log("Executing Chase State");
 
-        if (!aiStateManager.fov.IsTargetVisible(target) && !aiStateManager.agent.hasPath) {
+        if ((!aiStateManager.fov.IsTargetVisible(target) && !aiStateManager.agent.hasPath) 
+             || target.GetComponent<Health>().IsDead) {
             aiStateManager.ChangeState(new UnitPatrolState(aiStateManager));
         }
 
-        if (Vector3.Distance(aiStateManager.transform.position, target.position) <= aiStateManager.AttackRange*0.8) {
+        if (Vector3.Distance(aiStateManager.transform.position, target.position) <= aiStateManager.AttackRange*0.8
+            && aiStateManager.fov.IsTargetVisible(target)) {
             aiStateManager.ChangeState(new UnitAttackState(aiStateManager, target));
         }
 

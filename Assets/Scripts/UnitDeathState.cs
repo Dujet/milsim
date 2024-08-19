@@ -10,7 +10,7 @@ public class UnitDeathState : IUnitState
         this.aiStateManager = aIStateManager;
     }
 
-    // TODO: change squad leader if the leader dies
+    // TODO: test if squad leader change works
     public void Enter()
     {
         Debug.Log($"{aiStateManager.gameObject.name}:Bro died");
@@ -19,6 +19,14 @@ public class UnitDeathState : IUnitState
         aiStateManager.fov.enabled = false;
         aiStateManager.moveOrderGenerator.enabled = false;
         aiStateManager.Weapon.enabled = false;
+
+        // If the unit is a squad leader, change the leader, otherwise remove the unit from the squad
+        // TODO: explore just having a RemoveSquadMember method which check all this
+        if (!aiStateManager.IsFollower) {
+            aiStateManager.moveOrderGenerator.ReplaceLeader(aiStateManager.agent);
+        } else {
+            aiStateManager.moveOrderGenerator.RemoveSquadMember(aiStateManager.agent);
+        }
     }
 
     public void Execute()

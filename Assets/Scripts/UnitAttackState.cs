@@ -25,6 +25,7 @@ public class UnitAttackState : IUnitState
         // Debug.Log("Executing Attack State");
 
         // If the target is not visible or out of range, change to chase state
+        // TODO: add health check so that the unit doesn't chase a dead target
         if (!aiStateManager.fov.IsTargetVisible(target) ||
             Vector3.Distance(aiStateManager.transform.position, target.position) > aiStateManager.AttackRange)
         {
@@ -52,9 +53,13 @@ public class UnitAttackState : IUnitState
         Debug.Log("Exiting Attack State");
     }
 
+    // TODO: test if spam fixed
     private bool changeTarget() {
         Transform target = aiStateManager.fov.GetClosestTarget();
-        if (target == null) return false;
+        if (target == null || target == this.target) return false;
+
+        Health targetHealth = target.GetComponent<Health>();
+        if (targetHealth.IsDead) return false;
 
         this.target = target;
         Debug.Log("Target successfully changed");

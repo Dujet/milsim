@@ -123,11 +123,11 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5000001
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 20
+  m_Acceleration: 20
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_AngularSpeed: 720
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -218,8 +218,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   terrainSizeX: 1000
   terrainSizeZ: 1000
-  agent: {fileID: 1757117907983935369}
-  grid: {fileID: 0}
   squad: []
   direction: 1
   goStraight: 1

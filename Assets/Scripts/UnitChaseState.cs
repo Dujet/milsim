@@ -13,7 +13,7 @@ public class UnitChaseState : IUnitState
     }
     public void Enter()
     {
-        Debug.Log("Entering Chase State");
+        Debug.Log($"{aiStateManager.gameObject.name}:Entering Chase State");
         aiStateManager.agent.SetDestination(target.position);
     }
 
@@ -33,7 +33,7 @@ public class UnitChaseState : IUnitState
 
     public void Exit()
     {
-        Debug.Log("Exiting Chase State");
+        Debug.Log($"{aiStateManager.gameObject.name}:Exiting Chase State");
     }
 
     public Transform GetTarget() {

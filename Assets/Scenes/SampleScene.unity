@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 3257.3716, g: 2212.0945, b: 1780.7954, a: 1}
+  m_IndirectSpecularColor: {r: 3246.805, g: 2222.265, b: 1819.4462, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -879,7 +879,7 @@ MonoBehaviour:
   moveOrderGenerator: {fileID: 0}
   agent: {fileID: 0}
   fov: {fileID: 0}
-  weapon: {fileID: 0}
+  weapon: {fileID: 1202303078}
   isFollower: 0
 --- !u!114 &1202303078
 MonoBehaviour:
@@ -1910,7 +1910,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4996202127954550956, guid: 3459dab76e29cce48bcbdff8dd05eb4d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.6
+      value: 7.68
       objectReference: {fileID: 0}
     - target: {fileID: 4996202127954550956, guid: 3459dab76e29cce48bcbdff8dd05eb4d, type: 3}
       propertyPath: m_LocalPosition.z

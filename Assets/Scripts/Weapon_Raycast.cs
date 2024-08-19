@@ -8,7 +8,7 @@ public class Weapon_Raycast : Weapon
     {
         RaycastHit hit;
         Vector3 direction = target.position - transform.position;
-        Debug.DrawLine(transform.position + Vector3.up, transform.position + direction.normalized * AttackRange, Color.red, 2.0f);
+        Debug.DrawLine(transform.position, transform.position + direction.normalized * AttackRange, Color.red, 2.0f);
         if (Physics.Raycast(transform.position, direction, out hit, AttackRange))
         {
             Debug.DrawLine(transform.position, target.position, Color.green, 2.0f);

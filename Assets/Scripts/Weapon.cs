@@ -4,9 +4,9 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
-    [SerializeField] protected float damage = 50f;
-    [SerializeField] protected float attackRange = 10f;
-    [SerializeField] protected float attackInterval = 5f;
+    [SerializeField] protected float damage = 30f;
+    [SerializeField] protected float attackRange = 50f;
+    [SerializeField] protected float attackInterval = 3f;
     private float attackTimer = 0f;
 
     void Update() {

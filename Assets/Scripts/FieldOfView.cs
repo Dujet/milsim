@@ -15,6 +15,7 @@ public class FieldOfView : MonoBehaviour
     public List<Transform> visibleTargets = new List<Transform>();
 
     [SerializeField] private float scanFrequency = 5f;
+    [SerializeField] private bool showDebugGizmos = true;
 
     void Start() {
         StartCoroutine(FindTargetsWithDelay(1f / scanFrequency));
@@ -79,6 +80,7 @@ public class FieldOfView : MonoBehaviour
     }
 
     void OnDrawGizmos() {
+        if (!showDebugGizmos) return;
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, viewRadius);
 

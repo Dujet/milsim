@@ -37,7 +37,7 @@ public class AIStateManager : MonoBehaviour
     void Start()
     {
         moveOrderGenerator = GetComponent<MoveOrderGenerator>();
-        currentState = new UnitPatrolState(this, isFollower);
+        currentState = new UnitPatrolState(this);
         agent = GetComponent<NavMeshAgent>();
         fov = GetComponent<FieldOfView>();
         weapon = GetComponent<Weapon>();
@@ -58,5 +58,13 @@ public class AIStateManager : MonoBehaviour
 
         currentState = newState;
         currentState.Enter();
+    }
+
+    public List<AIStateManager> GetSquadMembers() {
+        List<AIStateManager> squadMembers = new List<AIStateManager>();
+        foreach (var member in moveOrderGenerator.Squad) {
+            squadMembers.Add(member.GetComponent<AIStateManager>());
+        }
+        return squadMembers;
     }
 }

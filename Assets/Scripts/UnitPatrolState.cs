@@ -6,12 +6,10 @@ using UnityEngine;
 public class UnitPatrolState : IUnitState
 {
     private readonly AIStateManager aiStateManager;
-    private bool isFollower;
 
-    public UnitPatrolState(AIStateManager aiStateManager, bool isFollower = false)
+    public UnitPatrolState(AIStateManager aiStateManager)
     {
         this.aiStateManager = aiStateManager;
-        this.isFollower = isFollower;
     }
 
     public void Enter()
@@ -19,16 +17,22 @@ public class UnitPatrolState : IUnitState
         Debug.Log("Entering Patrol State");
     }
 
+    // TODO: change states of squad members to chase when a target is found
     public void Execute()
     {
-        if (!aiStateManager.moveOrderGenerator.hasPath() && !isFollower){
+        if (!aiStateManager.moveOrderGenerator.hasPath() && !aiStateManager.IsFollower){
             Debug.Log("Patrol State: generating new path");
             aiStateManager.moveOrderGenerator.generateMoveOrders();
         }
 
         Transform target = aiStateManager.fov.GetClosestTarget();
-        if (target != null) {
-            aiStateManager.ChangeState(new UnitChaseState(aiStateManager, target));
+        if (target == null) return;
+        aiStateManager.ChangeState(new UnitChaseState(aiStateManager, target));
+
+        if (aiStateManager.IsFollower) return;
+        List<AIStateManager> squadMembers = aiStateManager.GetSquadMembers();
+        foreach (AIStateManager member in squadMembers) {
+            member.ChangeState(new UnitChaseState(member, target));
         }
     }
 

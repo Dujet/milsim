@@ -17,7 +17,6 @@ public class UnitPatrolState : IUnitState
         Debug.Log($"{aiStateManager.gameObject.name}:Entering Patrol State");
     }
 
-    // TODO: change states of squad members to chase when a target is found
     public void Execute()
     {
         if (aiStateManager == null) return;
@@ -29,13 +28,15 @@ public class UnitPatrolState : IUnitState
 
         Transform target = aiStateManager.fov.GetClosestTarget();
         if (target == null) return;
-        aiStateManager.ChangeState(new UnitChaseState(aiStateManager, target));
+        if (!target.GetComponent<Health>().IsDead)
+            aiStateManager.ChangeState(new UnitChaseState(aiStateManager, target));
 
-        if (aiStateManager.IsFollower) return;
+        if (aiStateManager.IsFollower || target.GetComponent<Health>().IsDead) return;
         List<AIStateManager> squadMembers = aiStateManager.GetSquadMembers();
         Debug.Log($"{aiStateManager.gameObject.name}:Alerting {squadMembers.Count} squad members!");
         foreach (AIStateManager member in squadMembers) {
-            member.ChangeState(new UnitChaseState(member, target));
+            if (member?.CurrentState is UnitPatrolState)
+                member.ChangeState(new UnitChaseState(member, target));
         }
     }
 

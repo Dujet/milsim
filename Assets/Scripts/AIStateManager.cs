@@ -42,7 +42,7 @@ public class AIStateManager : MonoBehaviour
         currentState = new UnitPatrolState(this);
         agent = GetComponent<NavMeshAgent>();
         fov = GetComponent<FieldOfView>();
-        weapon = GetComponent<Weapon>();
+        if (weapon == null) weapon = GetComponent<Weapon>();
         attackRange = weapon.AttackRange;
     }
 

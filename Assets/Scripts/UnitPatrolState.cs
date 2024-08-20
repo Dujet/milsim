@@ -15,6 +15,7 @@ public class UnitPatrolState : IUnitState
     public void Enter()
     {
         Debug.Log($"{aiStateManager.gameObject.name}:Entering Patrol State");
+        aiStateManager.agent.autoBraking = false;
     }
 
     public void Execute()
@@ -43,5 +44,6 @@ public class UnitPatrolState : IUnitState
     public void Exit()
     {
         Debug.Log($"{aiStateManager.gameObject.name}:Exiting Patrol State");
+        aiStateManager.agent.autoBraking = true;
     }
 }

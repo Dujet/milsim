@@ -61,15 +61,18 @@ public class MoveOrderGenerator : MonoBehaviour
         //advanceToNextCell();
     }
 
-    public void generateMoveOrders() {
+    // NOTE: flatten if statements
+    public bool generateMoveOrders() {
         if (targetCell.z <= 0) {
             // stop the agent
             agent.isStopped = true;
-            return;
+            return false;
         }
         if (agent.remainingDistance < agent.stoppingDistance * 5 && !agent.pathPending && targetCell.z >= 0) {
             advanceToNextCell();
+            return true;
         }
+        return false;
     }
     
     public bool hasPath() {

@@ -22,4 +22,9 @@ public class Weapon_Raycast : Weapon
             }
         }
     }
+
+    public override void StopAttack()
+    {
+        Debug.Log("Stopping attack");
+    }
 }

@@ -22,9 +22,10 @@ public class UnitPatrolState : IUnitState
     {
         if (aiStateManager == null) return;
 
-        if (!(aiStateManager.moveOrderGenerator?.hasPath() ?? true) && !aiStateManager.IsFollower){
-            Debug.Log($"Patrol State: {aiStateManager.gameObject.name} generating new path");
-            aiStateManager.moveOrderGenerator.generateMoveOrders();
+        if (!aiStateManager.IsFollower){
+            if (aiStateManager.moveOrderGenerator.generateMoveOrders()){
+                Debug.Log($"Patrol State: {aiStateManager.gameObject.name} generating new path");
+            }
         }
 
         Transform target = aiStateManager.fov.GetClosestTarget();

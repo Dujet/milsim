@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1474290625890043036}
-  - component: {fileID: 4964824142961648573}
+  - component: {fileID: 4436329465364140756}
   m_Layer: 0
   m_Name: WeaponFirePoint
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5914669427294459950}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4964824142961648573
+--- !u!114 &4436329465364140756
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -226,7 +226,7 @@ MonoBehaviour:
   moveOrderGenerator: {fileID: 0}
   agent: {fileID: 0}
   fov: {fileID: 0}
-  weapon: {fileID: 4964824142961648573}
+  weapon: {fileID: 4436329465364140756}
   isFollower: 0
 --- !u!65 &4989895118902899455
 BoxCollider:
@@ -305,7 +305,7 @@ MonoBehaviour:
     m_Bits: 64
   visibleTargets: []
   scanFrequency: 5
-  showDebugGizmos: 1
+  showDebugGizmos: 0
 --- !u!4 &5911680446016846256 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4094816930434154, guid: b5d023135bcb7f348bcb343326045412, type: 3}

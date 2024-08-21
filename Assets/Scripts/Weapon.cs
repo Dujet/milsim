@@ -7,7 +7,7 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected float damage = 30f;
     [SerializeField] protected float attackRange = 50f;
     [SerializeField] protected float attackInterval = 3f;
-    private float attackTimer = 0f;
+    protected float attackTimer = 0f;
 
     void Update() {
         UpdateAttackTimer();
@@ -36,8 +36,8 @@ public abstract class Weapon : MonoBehaviour
 
     public abstract void Attack(Transform target);
 
-    public bool Fire(Transform target) {
-        if (CanAttack())
+    public virtual bool Fire(Transform target) {
+        if (CanAttack(target))
         {
             Attack(target);
             ResetAttackTimer();
@@ -47,13 +47,13 @@ public abstract class Weapon : MonoBehaviour
         return false;
     }
 
-    public void UpdateAttackTimer()
+    private void UpdateAttackTimer()
     {
         if (attackTimer < 0) return;
         attackTimer -= Time.deltaTime;
     }
 
-    public bool CanAttack()
+    public virtual bool CanAttack(Transform target)
     {
         return attackTimer <= 0;
     }
@@ -63,5 +63,5 @@ public abstract class Weapon : MonoBehaviour
         attackTimer = attackInterval;
     }
 
-
+    public abstract void StopAttack();
 }

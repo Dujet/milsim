@@ -9,4 +9,9 @@ public class Weapon_Rh120 : Weapon
     {
         
     }
+
+    public override void StopAttack()
+    {
+        throw new System.NotImplementedException();
+    }
 }

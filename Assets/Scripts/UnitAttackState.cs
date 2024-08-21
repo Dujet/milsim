@@ -23,7 +23,7 @@ public class UnitAttackState : IUnitState
         targetHealth = target.GetComponent<Health>();
     }
 
-    // TODO: think of way to keep unit looking at target while attacking
+    // TODO: explore using agent.isStopped instead of ResetPath
     public void Execute()
     {
         // Debug.Log("Executing Attack State");
@@ -45,7 +45,7 @@ public class UnitAttackState : IUnitState
         }
 
         // Attack the target
-        bool fired = aiStateManager.Weapon.CanAttack();
+        bool fired = aiStateManager.Weapon.CanAttack(target);
         aiStateManager.Weapon.Fire(target);
         if (fired) {
             Debug.Log($"{aiStateManager.gameObject.name}:Attacking {target.gameObject.name}");
@@ -64,10 +64,10 @@ public class UnitAttackState : IUnitState
     public void Exit()
     {
         Debug.Log($"{aiStateManager.gameObject.name}:Exiting Attack State");
+        aiStateManager.Weapon.StopAttack();
     }
 
-    // TODO: test if spam fixed
-    // Get the closest target in the field of view
+    // TODO: make this iterate through visible targets list if first one is dead
     private bool updateTarget() {
         Transform newTarget = aiStateManager.fov.GetClosestTarget();
         if (newTarget == null || newTarget == target) return false;

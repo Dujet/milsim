@@ -9,13 +9,7 @@ public class TurretController : MonoBehaviour
     [SerializeField] private Transform barrel;
     // [SerializeField] private Transform firePoint;
     [SerializeField] private float rotationSpeed = 30f; // degrees per second
-    [SerializeField] private Transform target; // serialized for debugging purposes
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private Transform target;
 
     // Update is called once per frame
     void FixedUpdate()
@@ -24,7 +18,7 @@ public class TurretController : MonoBehaviour
         AimAtTarget();
     }
 
-    // FIXME: barrel rotating along its y axis
+    // TODO: make turret rotate forward on target clear
     private void AimAtTarget() {
         // Rotate the turret
         Vector3 targetDirection = target.position - turret.position;

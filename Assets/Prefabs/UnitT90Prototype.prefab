@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1474290625890043036}
+  - component: {fileID: 4964824142961648573}
   m_Layer: 0
   m_Name: WeaponFirePoint
   m_TagString: Untagged
@@ -31,6 +32,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5914669427294459950}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4964824142961648573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5725310217527589811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58924c0a2b8fc28419df72ebca035ec6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 30
+  attackRange: 100
+  attackInterval: 3
+  turretController: {fileID: 892001564749156891}
+  barrel: {fileID: 5914669427294459950}
 --- !u!1 &8770004586706642798
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,19 +173,16 @@ PrefabInstance:
       addedObject: {fileID: 8318381330118278759}
     - targetCorrespondingSourceObject: {fileID: 1498083748156456, guid: b5d023135bcb7f348bcb343326045412, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7476555463695936234}
-    - targetCorrespondingSourceObject: {fileID: 1498083748156456, guid: b5d023135bcb7f348bcb343326045412, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 4989895118902899455}
     - targetCorrespondingSourceObject: {fileID: 1498083748156456, guid: b5d023135bcb7f348bcb343326045412, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8350190404053612283}
-    - targetCorrespondingSourceObject: {fileID: 1498083748156456, guid: b5d023135bcb7f348bcb343326045412, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1054131775350525351}
     - targetCorrespondingSourceObject: {fileID: 1914462181120338, guid: b5d023135bcb7f348bcb343326045412, type: 3}
       insertIndex: -1
       addedObject: {fileID: 892001564749156891}
+    - targetCorrespondingSourceObject: {fileID: 1914462181120338, guid: b5d023135bcb7f348bcb343326045412, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4307419123794671945}
   m_SourcePrefab: {fileID: 100100000, guid: b5d023135bcb7f348bcb343326045412, type: 3}
 --- !u!1 &5909105625754558962 stripped
 GameObject:
@@ -211,23 +226,8 @@ MonoBehaviour:
   moveOrderGenerator: {fileID: 0}
   agent: {fileID: 0}
   fov: {fileID: 0}
-  weapon: {fileID: 7476555463695936234}
+  weapon: {fileID: 4964824142961648573}
   isFollower: 0
---- !u!114 &7476555463695936234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5909105625754558962}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 308748a632bfbbe41b7d8e32b0017d38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 30
-  attackRange: 100
-  attackInterval: 3
 --- !u!65 &4989895118902899455
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -263,29 +263,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 500
   currentHealth: 500
---- !u!114 &1054131775350525351
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5909105625754558962}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 733b2fd1091ec574782e158b2f9a08fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewAngle: 120
-  viewRadius: 100
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 128
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 64
-  visibleTargets: []
-  scanFrequency: 5
-  showDebugGizmos: 1
 --- !u!1 &5909500121544273032 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1914462181120338, guid: b5d023135bcb7f348bcb343326045412, type: 3}
@@ -306,7 +283,29 @@ MonoBehaviour:
   turret: {fileID: 5911754936895620282}
   barrel: {fileID: 5914669427294459950}
   rotationSpeed: 30
-  target: {fileID: 0}
+--- !u!114 &4307419123794671945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5909500121544273032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 733b2fd1091ec574782e158b2f9a08fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewAngle: 120
+  viewRadius: 100
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 128
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 64
+  visibleTargets: []
+  scanFrequency: 5
+  showDebugGizmos: 1
 --- !u!4 &5911680446016846256 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4094816930434154, guid: b5d023135bcb7f348bcb343326045412, type: 3}

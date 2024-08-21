@@ -6,6 +6,7 @@ public class Weapon_RaycastTurret : Weapon_Raycast
 {
     [SerializeField] private TurretController turretController;
     [SerializeField] private Transform barrel;
+    [SerializeField] private ParticleSystem muzzleFlash;
     public override bool CanAttack(Transform target)
     {
         return attackTimer <= 0 && WeaponIsAligned(target);
@@ -33,6 +34,7 @@ public class Weapon_RaycastTurret : Weapon_Raycast
         {
             Attack(target);
             ResetAttackTimer();
+            PlayMuzzleFlash();
             return true;
         }
 
@@ -42,5 +44,14 @@ public class Weapon_RaycastTurret : Weapon_Raycast
     public override void StopAttack()
     {
         turretController.ClearTarget();
+    }
+
+    private void PlayMuzzleFlash()
+    {
+        if (muzzleFlash != null)
+        {
+            var obj = Instantiate(muzzleFlash, transform.position, Quaternion.Euler(-90, 0, 0));
+            Destroy(obj.gameObject, 5f);
+        }
     }
 }

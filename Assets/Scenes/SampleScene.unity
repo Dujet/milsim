@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 3262.2087, g: 2208.2373, b: 1764.3723, a: 1}
+  m_IndirectSpecularColor: {r: 3262.4756, g: 2191.347, b: 1726.6992, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -131,6 +131,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4436329465364140756, guid: f834bb7a3640ef446bb250b1b3c3052a, type: 3}
+      propertyPath: muzzleFlash
+      value: 
+      objectReference: {fileID: 19800006, guid: 7c442b9b6852b8a4f93306f3d154d471, type: 3}
+    - target: {fileID: 4436329465364140756, guid: f834bb7a3640ef446bb250b1b3c3052a, type: 3}
+      propertyPath: _impactEffectPrefab
+      value: 
+      objectReference: {fileID: 100002, guid: 00fedc70b62a31e448e8ccc298257b56, type: 3}
     - target: {fileID: 7294766184832418560, guid: f834bb7a3640ef446bb250b1b3c3052a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 559.8
@@ -406,6 +414,7 @@ MonoBehaviour:
   damage: 30
   attackRange: 50
   attackInterval: 3
+  _impactEffectPrefab: {fileID: 100002, guid: 00fedc70b62a31e448e8ccc298257b56, type: 3}
 --- !u!114 &700104602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1346,6 +1355,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2640490094319402162, guid: 7e1aeae1727c70a40be5357bbaa152a3, type: 3}
+      propertyPath: _impactEffectPrefab
+      value: 
+      objectReference: {fileID: 100002, guid: 00fedc70b62a31e448e8ccc298257b56, type: 3}
     - target: {fileID: 7294766184832418560, guid: 7e1aeae1727c70a40be5357bbaa152a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 545.01416

@@ -7,12 +7,14 @@ public class DroneCamera : MonoBehaviour
     [SerializeField] private Camera _cam;
     [SerializeField] private Transform _drone;
     [SerializeField] private Vector3 _offset;
-    [SerializeField] private float _lerpSpeed = 0.125f;
+    [SerializeField] private float _zoomSpeed = 10f;
+    private float _targetFOV;
 
     // Start is called before the first frame update
     void Start()
     {
         _cam.transform.position = _drone.position + _offset;
+        _targetFOV = _cam.fieldOfView;
     }
 
     void FixedUpdate() {
@@ -26,8 +28,11 @@ public class DroneCamera : MonoBehaviour
         _cam.transform.RotateAround(_drone.position, _cam.transform.right, -mouseY);
 
         // zoom in/out with mouse wheel
+        // TODO: make zooming in/out smoother and logarithmic
         float scroll = Input.GetAxis("Mouse ScrollWheel");
-        _cam.fieldOfView -= scroll * 10;
+        //_cam.fieldOfView -= scroll * 10;
+        _targetFOV -= scroll * 10;
+        _cam.fieldOfView = Mathf.Lerp(_cam.fieldOfView, _targetFOV, Time.deltaTime * _zoomSpeed);
 
 
 

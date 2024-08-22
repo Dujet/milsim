@@ -28,7 +28,7 @@ public class DroneCamera : MonoBehaviour
         _cam.transform.RotateAround(_drone.position, _cam.transform.right, -mouseY);
 
         // zoom in/out with mouse wheel
-        // TODO: make zooming in/out smoother and logarithmic
+        // TODO: make zooming in/out logarithmic
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         //_cam.fieldOfView -= scroll * 10;
         _targetFOV -= scroll * 10;

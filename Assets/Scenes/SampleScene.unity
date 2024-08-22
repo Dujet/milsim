@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 3262.2805, g: 2191.9766, b: 1728.4431, a: 1}
+  m_IndirectSpecularColor: {r: 3264.9482, g: 2206.7156, b: 1756.5575, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1126,6 +1126,7 @@ GameObject:
   - component: {fileID: 1286936259}
   - component: {fileID: 1286936258}
   - component: {fileID: 1286936260}
+  - component: {fileID: 1286936261}
   m_Layer: 0
   m_Name: Drone
   m_TagString: Untagged
@@ -1251,7 +1252,22 @@ MonoBehaviour:
   _cam: {fileID: 1699257924}
   _drone: {fileID: 1286936257}
   _offset: {x: 0, y: 0, z: 0}
-  _lerpSpeed: 0.125
+  _zoomSpeed: 10
+--- !u!114 &1286936261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286936254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fb0cdbb3801614f84ad32787131014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fieldOfView: {fileID: 1699257926}
+  _showDebugGizmos: 1
+  _camera: {fileID: 1699257924}
 --- !u!1 &1363767776
 GameObject:
   m_ObjectHideFlags: 0
@@ -1499,6 +1515,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.1, y: 0.1, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1640030112 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5911680446016846256, guid: f834bb7a3640ef446bb250b1b3c3052a, type: 3}
+  m_PrefabInstance: {fileID: 205175580}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1699257921
 GameObject:
   m_ObjectHideFlags: 0
@@ -1511,9 +1532,10 @@ GameObject:
   - component: {fileID: 1699257924}
   - component: {fileID: 1699257923}
   - component: {fileID: 1699257922}
+  - component: {fileID: 1699257926}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: NATO
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1721,6 +1743,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &1699257926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699257921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 733b2fd1091ec574782e158b2f9a08fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewAngle: 90
+  viewRadius: 3000
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 128
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 64
+  visibleTargets:
+  - {fileID: 1640030112}
+  scanFrequency: 5
+  showDebugGizmos: 1
 --- !u!1 &2033586031
 GameObject:
   m_ObjectHideFlags: 0

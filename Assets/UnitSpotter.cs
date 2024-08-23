@@ -37,7 +37,7 @@ public class UnitSpotter : MonoBehaviour
                     //if (_visibleTargets.Contains(target)) {
                         UnitHighlight unitHighlight = Instantiate(_assaultDronePrefab, transform.position - Vector3.up*5, Quaternion.identity);
                         unitHighlight.Init(hit.transform.GetComponentInChildren<Renderer>(), this);
-                        _droneCamera.DisableCamera();
+                        _droneCamera.enabled = false;
                         GetComponent<PlayerInput>().enabled = false;
                         GetComponent<Drone_Inputs>().enabled = false;
                     //}
@@ -55,7 +55,7 @@ public class UnitSpotter : MonoBehaviour
     }
 
     public void EnableCamera() {
-        _droneCamera.EnableCamera();
+        _droneCamera.enabled = true;
         GetComponent<PlayerInput>().enabled = true;
         GetComponent<Drone_Inputs>().enabled = true;
     }

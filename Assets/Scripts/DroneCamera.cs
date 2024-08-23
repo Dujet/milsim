@@ -42,12 +42,12 @@ public class DroneCamera : MonoBehaviour
         _cam.fieldOfView = Mathf.Lerp(_cam.fieldOfView, _targetFOV, Time.deltaTime * _zoomSpeed);
     }
 
-    public void DisableCamera() {
+    public void OnDisable() {
         _cam.enabled = false;
         _cam.GetComponent<AudioListener>().enabled = false;
     }
 
-    public void EnableCamera() {
+    public void OnEnable() {
         _cam.enabled = true;
         _cam.GetComponent<AudioListener>().enabled = true;
     }

@@ -317,6 +317,7 @@ GameObject:
   - component: {fileID: 2284017443122736776}
   - component: {fileID: 7713647466354263715}
   - component: {fileID: 1059233604518956073}
+  - component: {fileID: 5103896763798275882}
   m_Layer: 0
   m_Name: DroneAssaultContainer
   m_TagString: Untagged
@@ -443,6 +444,21 @@ MonoBehaviour:
   _drone: {fileID: 3719870814687831696}
   _offset: {x: 0, y: 0, z: 0}
   _zoomSpeed: 10
+  _rotSpeed: 5
+--- !u!114 &5103896763798275882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5764431118645988396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0794f96d81f89104496819ff53c15b08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _explosionPrefab: {fileID: 100004, guid: b46890100828db6429ff69c322b45893, type: 3}
+  _damage: 500
 --- !u!1 &6841970996871560367
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,14 +8,14 @@ public class UnitHighlight : MonoBehaviour
     [SerializeField] private Camera _camera;
     private Material _defaultMaterial;
     private Renderer _renderer;
-    private DroneCamera _otherDroneCamera;
+    private UnitSpotter _otherDroneCamera;
 
     void Update() {
         if (_renderer == null) return;
         //DrawSquare();
     }
 
-    public void Init(Renderer renderer, DroneCamera otherDroneCamera) {
+    public void Init(Renderer renderer, UnitSpotter otherDroneCamera) {
         _renderer = renderer;
         _defaultMaterial = _renderer.material;
         _otherDroneCamera = otherDroneCamera;

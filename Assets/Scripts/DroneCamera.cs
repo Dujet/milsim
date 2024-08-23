@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Polybrush;
 using UnityEngine;
 
 public class DroneCamera : MonoBehaviour
@@ -9,6 +10,12 @@ public class DroneCamera : MonoBehaviour
     [SerializeField] private Vector3 _offset;
     [SerializeField] private float _zoomSpeed = 10f;
     private float _targetFOV;
+
+    void Awake() {
+        if (_cam == null) {
+            _cam = GetComponentInChildren<Camera>();
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -33,8 +40,15 @@ public class DroneCamera : MonoBehaviour
         //_cam.fieldOfView -= scroll * 10;
         _targetFOV -= scroll * 10;
         _cam.fieldOfView = Mathf.Lerp(_cam.fieldOfView, _targetFOV, Time.deltaTime * _zoomSpeed);
+    }
 
+    public void DisableCamera() {
+        _cam.enabled = false;
+        _cam.GetComponent<AudioListener>().enabled = false;
+    }
 
-
+    public void EnableCamera() {
+        _cam.enabled = true;
+        _cam.GetComponent<AudioListener>().enabled = true;
     }
 }

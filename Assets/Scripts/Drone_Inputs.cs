@@ -35,4 +35,11 @@ public class Drone_Inputs : MonoBehaviour
     {
         throttleInput = value.Get<float>();
     }
+
+    void OnDisable()
+    {
+        cyclicInput = Vector2.zero;
+        pedalInput = 0f;
+        throttleInput = 0f;
+    }
 }

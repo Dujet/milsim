@@ -460,7 +460,7 @@ MonoBehaviour:
   _showDebugGizmos: 1
   _camera: {fileID: 0}
   _targetTag: WARSAW
-  _assaultDronePrefab: {fileID: 4613846706374877212, guid: d7b4fec6648a498458f27fb3bdf70a60, type: 3}
+  _assaultDronePrefab: {fileID: 7788578227327713831, guid: d7b4fec6648a498458f27fb3bdf70a60, type: 3}
 --- !u!1001 &3236644843723050841
 PrefabInstance:
   m_ObjectHideFlags: 0

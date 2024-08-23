@@ -24,7 +24,7 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 4
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 3263.374, g: 2191.4712, b: 1725.4299, a: 1}
+  m_IndirectSpecularColor: {r: 3263.3765, g: 2191.4712, b: 1725.4358, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1380,7 +1380,7 @@ Transform:
   m_GameObject: {fileID: 1699257921}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 472.96793, y: 4.0730004, z: 917.0665}
+  m_LocalPosition: {x: 472.96793, y: 11.2, z: 917.0665}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1409,7 +1409,7 @@ MonoBehaviour:
   visibleTargets:
   - {fileID: 1640030112}
   scanFrequency: 5
-  showDebugGizmos: 1
+  showDebugGizmos: 0
 --- !u!1 &2033586031
 GameObject:
   m_ObjectHideFlags: 0
@@ -1479,13 +1479,17 @@ PrefabInstance:
       propertyPath: _fieldOfView
       value: 
       objectReference: {fileID: 1699257926}
+    - target: {fileID: 1752632418764833719, guid: 65844d6a2a762df4e92e9a310fe888e0, type: 3}
+      propertyPath: _assaultDronePrefab
+      value: 
+      objectReference: {fileID: 7788578227327713831, guid: d7b4fec6648a498458f27fb3bdf70a60, type: 3}
     - target: {fileID: 4705756126094719992, guid: 65844d6a2a762df4e92e9a310fe888e0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 472.96793
       objectReference: {fileID: 0}
     - target: {fileID: 4705756126094719992, guid: 65844d6a2a762df4e92e9a310fe888e0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.03
+      value: 11.6
       objectReference: {fileID: 0}
     - target: {fileID: 4705756126094719992, guid: 65844d6a2a762df4e92e9a310fe888e0, type: 3}
       propertyPath: m_LocalPosition.z

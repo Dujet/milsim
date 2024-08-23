@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Polybrush;
@@ -10,6 +11,9 @@ public class DroneCamera : MonoBehaviour
     [SerializeField] private Vector3 _offset;
     [SerializeField] private float _zoomSpeed = 10f;
     private float _targetFOV;
+    private float rotX;
+    private float rotY;
+    [SerializeField] private float _rotSpeed = 5f;
 
     void Awake() {
         if (_cam == null) {
@@ -22,17 +26,20 @@ public class DroneCamera : MonoBehaviour
     {
         _cam.transform.position = _drone.position + _offset;
         _targetFOV = _cam.fieldOfView;
+        rotX = _cam.transform.rotation.eulerAngles.x;
+        rotY = _cam.transform.rotation.eulerAngles.y;
     }
 
     void FixedUpdate() {
         _cam.transform.position = _drone.position + _offset;
         
-        // rotate camera with mouse
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
+        rotX += Input.GetAxis("Mouse X")*_rotSpeed;
+        rotY += Input.GetAxis ("Mouse Y")*_rotSpeed;
 
-        _cam.transform.RotateAround(_drone.position, Vector3.up, mouseX);
-        _cam.transform.RotateAround(_drone.position, _cam.transform.right, -mouseY);
+        rotY = Mathf.Clamp(rotY, -90f, 90f);      
+
+        //Camera rotation only allowed if game us not paused
+        _cam.transform.rotation = Quaternion.Euler(-rotY, rotX, 0f);
 
         // zoom in/out with mouse wheel
         // TODO: make zooming in/out logarithmic

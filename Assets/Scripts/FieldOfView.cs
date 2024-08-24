@@ -49,7 +49,7 @@ public class FieldOfView : MonoBehaviour
     private bool IsValidTarget(Transform target) {
         Health health = target.GetComponent<Health>();
         if (health == null) return false;
-        return target.CompareTag("WARSAW") && !health.IsDead;
+        return !target.CompareTag(gameObject.tag) && !health.IsDead;
     }
 
     private void FilterFriendlyTargets() {

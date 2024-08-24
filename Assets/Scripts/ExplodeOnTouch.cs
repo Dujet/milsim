@@ -20,12 +20,13 @@ public class ExplodeOnTouch : MonoBehaviour
 
     void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.CompareTag("WARSAW") && !_exploded) {
-            Explode();
-
             // Damage collided enemy
-            if (TryGetComponent<Health>(out Health health)) {
+            if (collision.gameObject.TryGetComponent<Health>(out Health health)) {
                 health.TakeDamage(_damage);
             }
+            Debug.Log("Drone collided with: " + collision.gameObject.name);
+
+            Explode();
         }
     }
 

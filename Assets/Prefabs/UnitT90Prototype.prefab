@@ -47,8 +47,10 @@ MonoBehaviour:
   damage: 30
   attackRange: 100
   attackInterval: 3
+  _impactEffectPrefab: {fileID: 100002, guid: 00fedc70b62a31e448e8ccc298257b56, type: 3}
   turretController: {fileID: 892001564749156891}
   barrel: {fileID: 5914669427294459950}
+  muzzleFlash: {fileID: 19800006, guid: 7c442b9b6852b8a4f93306f3d154d471, type: 3}
 --- !u!1 &8770004586706642798
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,8 +306,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   visibleTargets: []
+  _targetFaction: 1
   scanFrequency: 5
-  showDebugGizmos: 0
+  showDebugGizmos: 1
 --- !u!4 &5911680446016846256 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4094816930434154, guid: b5d023135bcb7f348bcb343326045412, type: 3}

@@ -13,6 +13,7 @@ public class FieldOfView : MonoBehaviour
     public LayerMask targetMask;
     public List<Transform> visibleTargets = new List<Transform>(); // contains visible enemy targets which are alive
     public event Action OnVisibleTargetsChanged;
+    [SerializeField] private Faction _targetFaction;
 
     [SerializeField] private float scanFrequency = 5f;
     [SerializeField] private bool showDebugGizmos = true;
@@ -49,7 +50,7 @@ public class FieldOfView : MonoBehaviour
     private bool IsValidTarget(Transform target) {
         Health health = target.GetComponent<Health>();
         if (health == null) return false;
-        return !target.CompareTag(gameObject.tag) && !health.IsDead;
+        return target.CompareTag(_targetFaction.ToString()) && !health.IsDead;
     }
 
     private void FilterFriendlyTargets() {

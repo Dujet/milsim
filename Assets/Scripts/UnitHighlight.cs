@@ -27,6 +27,11 @@ public class UnitHighlight : MonoBehaviour
     void Update() {
         if (_target == null) return;
 
+        // Check if target is behind camera
+        Vector3 direction = (_target.position - Camera.main.transform.position).normalized;
+        bool isBehind = Vector3.Dot(direction, Camera.main.transform.forward) <= 0;
+        _targetMarker.enabled = !isBehind;
+
         Vector3 screenPos = _camera.WorldToScreenPoint(_target.position);
         _targetMarker.transform.position = screenPos;
     }

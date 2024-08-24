@@ -34,6 +34,6 @@ public class ExplodeOnTouch : MonoBehaviour
         _exploded = true;
         Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
         _collider.enabled = false;
-        Destroy(_parentToDestroy, 0.5f);
+        Destroy(_parentToDestroy, 0.1f);
     }
 }

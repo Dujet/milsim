@@ -10,7 +10,7 @@ public class HUDController : MonoBehaviour
     [SerializeField] private FieldOfView _fieldOfView;
     [SerializeField] private Camera _camera;
     private List<GameObject> _targetMarkers = new List<GameObject>();
-    private List<Transform> _targets;
+    //private List<Transform> _targets;
 
     
     // Start is called before the first frame update
@@ -27,11 +27,11 @@ public class HUDController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < _targets.Count; i++)
+        for (int i = 0; i < _fieldOfView.visibleTargets.Count; i++)
         {
-            if (_targets[i] != null)
+            if (_fieldOfView.visibleTargets[i] != null)
             {
-                Vector3 screenPos = _camera.WorldToScreenPoint(_targets[i].position);
+                Vector3 screenPos = _camera.WorldToScreenPoint(_fieldOfView.visibleTargets[i].position);
                 _targetMarkers[i].transform.position = screenPos;
             }
         }
@@ -43,9 +43,9 @@ public class HUDController : MonoBehaviour
         }
         _targetMarkers.Clear();
 
-        _targets = new List<Transform>(_fieldOfView.visibleTargets);
+        _fieldOfView.visibleTargets = new List<Transform>(_fieldOfView.visibleTargets);
 
-        foreach (var target in _targets) {
+        foreach (var target in _fieldOfView.visibleTargets) {
             GameObject targetMarker = Instantiate(_targetMarkerPrefab, _canvas.transform);
             targetMarker.transform.position = _camera.WorldToScreenPoint(target.position);
             _targetMarkers.Add(targetMarker);

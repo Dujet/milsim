@@ -14,10 +14,16 @@ public class DroneCamera : MonoBehaviour
     private float rotX;
     private float rotY;
     [SerializeField] private float _rotSpeed = 5f;
+    private RectTransform _droneRotationMarker;
+    private float _cameraDroneAngle;
 
     void Awake() {
         if (_cam == null) {
             _cam = GetComponentInChildren<Camera>();
+        }
+
+        if (_droneRotationMarker == null) {
+            _droneRotationMarker = GameObject.FindGameObjectWithTag("RotationMarker").GetComponent<RectTransform>();
         }
     }
 
@@ -48,6 +54,14 @@ public class DroneCamera : MonoBehaviour
         //_cam.fieldOfView -= scroll * 10;
         _targetFOV -= scroll * 10;
         _cam.fieldOfView = Mathf.Lerp(_cam.fieldOfView, _targetFOV, Time.deltaTime * _zoomSpeed);
+
+        // Update drone rotation marker
+        Vector3 droneForward = _drone.forward;
+        droneForward.y = 0;
+        Vector3 camForward = _cam.transform.forward;
+        camForward.y = 0;
+        _cameraDroneAngle = Vector3.SignedAngle(droneForward, camForward, Vector3.up);
+        _droneRotationMarker.localEulerAngles = new Vector3(0, 0, _cameraDroneAngle);
     }
 
     public void OnDisable() {

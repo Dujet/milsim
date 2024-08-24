@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HUDController : MonoBehaviour
 {
@@ -46,6 +47,13 @@ public class HUDController : MonoBehaviour
 
         foreach (var target in _fieldOfView.visibleTargets) {
             GameObject targetMarker = Instantiate(_targetMarkerPrefab, _canvas.transform);
+
+            // Check if target is behind camera
+            Vector3 direction = (target.position - Camera.main.transform.position).normalized;
+            bool isBehind = Vector3.Dot(direction, Camera.main.transform.forward) <= 0;
+            targetMarker.GetComponent<RawImage>().enabled = !isBehind;
+
+            // Update target marker position
             targetMarker.transform.position = Camera.main.WorldToScreenPoint(target.position);
             _targetMarkers.Add(targetMarker);
         }

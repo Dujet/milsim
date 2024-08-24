@@ -10,8 +10,8 @@ public class Base_RigidBody : MonoBehaviour
     [Header("Rigidbody properties")]
     [SerializeField] private float weight = 1f;
     protected Rigidbody rb;
-    protected float startDrag;
-    protected float startAngularDrag;
+    [SerializeField] protected float startDrag = 0.5f;
+    [SerializeField] protected float startAngularDrag = 0.05f;
 
     void Awake()
     {

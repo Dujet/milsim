@@ -36,7 +36,7 @@ public class UnitSpotter : MonoBehaviour
                     //Transform target = hit.collider.transform;
                     //if (_visibleTargets.Contains(target)) {
                         UnitHighlight unitHighlight = Instantiate(_assaultDronePrefab, transform.position - Vector3.up*5, Quaternion.identity);
-                        unitHighlight.Init(hit.transform.GetComponentInChildren<Renderer>(), this);
+                        unitHighlight.Init(hit.transform, this);
                         _droneCamera.enabled = false;
                         GetComponent<PlayerInput>().enabled = false;
                         GetComponent<Drone_Inputs>().enabled = false;

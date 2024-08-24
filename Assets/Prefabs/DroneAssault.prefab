@@ -730,8 +730,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 593034d5140bfe342a63dfb9c31f0922, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _highlightMaterial: {fileID: 2100000, guid: 78c6825c5d9c3664f9879ae8609618c7, type: 2}
+  _targetMarkerPrefab: {fileID: 2561040399625498059, guid: 47cf3ded27c3dae449742e3fc799a9b7, type: 3}
   _camera: {fileID: 2637673079530953992}
+  _canvas: {fileID: 0}
 --- !u!1001 &3236644843723050841
 PrefabInstance:
   m_ObjectHideFlags: 0

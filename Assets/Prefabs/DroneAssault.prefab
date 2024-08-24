@@ -459,6 +459,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _explosionPrefab: {fileID: 100004, guid: b46890100828db6429ff69c322b45893, type: 3}
   _damage: 500
+  _parentToDestroy: {fileID: 8295729828358812494}
 --- !u!1 &6841970996871560367
 GameObject:
   m_ObjectHideFlags: 0

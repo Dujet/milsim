@@ -1,55 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UnitHighlight : MonoBehaviour
 {
-    [SerializeField] private Material _highlightMaterial;
+    [SerializeField] private RawImage _targetMarkerPrefab;
     [SerializeField] private Camera _camera;
-    private Material _defaultMaterial;
-    private Renderer _renderer;
+    private Transform _target;
     private UnitSpotter _otherDroneCamera;
+    private RawImage _targetMarker;
+    [SerializeField] private Canvas _canvas;
+
+    public void Init(Transform target, UnitSpotter otherDroneCamera) {
+        _target = target;
+        _otherDroneCamera = otherDroneCamera;
+
+        _targetMarker = Instantiate(_targetMarkerPrefab, _canvas.transform);
+        _targetMarker.color = Color.red;
+    }
+
+    void Awake() {
+        if (_canvas == null) _canvas = FindObjectOfType<Canvas>();
+    }
 
     void Update() {
-        if (_renderer == null) return;
-        //DrawSquare();
+        if (_target == null) return;
+
+        Vector3 screenPos = _camera.WorldToScreenPoint(_target.position);
+        _targetMarker.transform.position = screenPos;
     }
 
-    public void Init(Renderer renderer, UnitSpotter otherDroneCamera) {
-        _renderer = renderer;
-        _defaultMaterial = _renderer.material;
-        _otherDroneCamera = otherDroneCamera;
-        Highlight();
-    }
-
-    public void Highlight()
-    {
-        _defaultMaterial = _renderer.material;
-        _renderer.material = _highlightMaterial;
-    }
-
-    public void RemoveHighlight()
-    {
-        if (_renderer == null) return;
-        _renderer.material = _defaultMaterial;
-    }
 
     private void OnDisable()
     {
-        RemoveHighlight();
         _otherDroneCamera.EnableCamera();
     }
 
     private void OnDestroy()
     {
-        RemoveHighlight();
         _otherDroneCamera.EnableCamera();
-    }
-
-    // draw a UI square around the target unit
-    void OnDrawGizmos() {
-        if (_renderer == null) return;
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(_renderer.bounds.center, _renderer.bounds.size*2);
+        Destroy(_targetMarker.gameObject);
     }
 }

@@ -12,6 +12,7 @@ public class FieldOfView : MonoBehaviour
     public LayerMask obstacleMask;
     public LayerMask targetMask;
     public List<Transform> visibleTargets = new List<Transform>(); // contains visible enemy targets which are alive
+    public event Action OnVisibleTargetsChanged;
 
     [SerializeField] private float scanFrequency = 5f;
     [SerializeField] private bool showDebugGizmos = true;
@@ -42,6 +43,7 @@ public class FieldOfView : MonoBehaviour
                 }
             }
         }
+        OnVisibleTargetsChanged?.Invoke();
     }
 
     private bool IsValidTarget(Transform target) {

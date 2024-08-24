@@ -25,6 +25,7 @@ public class DroneCamera : MonoBehaviour
     void Start()
     {
         _cam.transform.position = _drone.position + _offset;
+        _cam.transform.rotation = _drone.rotation;
         _targetFOV = _cam.fieldOfView;
         rotX = _cam.transform.rotation.eulerAngles.x;
         rotY = _cam.transform.rotation.eulerAngles.y;

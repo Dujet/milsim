@@ -8,14 +8,14 @@ public class ExplodeOnTouch : MonoBehaviour
     private Collider _collider;
     private bool _exploded = false;
     [SerializeField] private float _damage = 500f;
-    private GameObject _prefabParent;
+    [SerializeField] private GameObject _parentToDestroy;
 
 
     // Start is called before the first frame update
     void Start()
     {
         _collider = GetComponentInChildren<Collider>();
-        _prefabParent = transform.parent.gameObject;
+        if (_parentToDestroy == null) _parentToDestroy = gameObject;
     }
 
     void OnCollisionEnter(Collision collision) {
@@ -33,6 +33,6 @@ public class ExplodeOnTouch : MonoBehaviour
         _exploded = true;
         Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
         _collider.enabled = false;
-        Destroy(_prefabParent, 0.5f);
+        Destroy(_parentToDestroy, 0.5f);
     }
 }

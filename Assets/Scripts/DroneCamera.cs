@@ -25,10 +25,10 @@ public class DroneCamera : MonoBehaviour
     void Start()
     {
         _cam.transform.position = _drone.position + _offset;
-        _cam.transform.rotation = _drone.rotation;
         _targetFOV = _cam.fieldOfView;
-        rotX = _cam.transform.rotation.eulerAngles.x;
-        rotY = _cam.transform.rotation.eulerAngles.y;
+        rotX = _drone.rotation.eulerAngles.x;
+        rotY = _drone.transform.rotation.eulerAngles.y - 180;
+        _cam.transform.rotation = Quaternion.Euler(-rotY, rotX, 0f);
     }
 
     void FixedUpdate() {

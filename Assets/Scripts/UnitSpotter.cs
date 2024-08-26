@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,9 +10,11 @@ public class UnitSpotter : MonoBehaviour
     private List<Transform> _visibleTargets = new List<Transform>();
     [SerializeField] private bool _showDebugGizmos = true;
     [SerializeField] private Camera _camera;
+    [SerializeField] private Faction _faction = Faction.NATO;
     [SerializeField] private string _targetTag = "WARSAW";
     [SerializeField] private UnitHighlight _assaultDronePrefab;
     private DroneCamera _droneCamera;
+    private List<Transform> _friendlyUnits;
 
     void Awake() {
         _droneCamera = GetComponent<DroneCamera>();
@@ -21,6 +24,7 @@ public class UnitSpotter : MonoBehaviour
     void Start()
     {
         _visibleTargets = _fieldOfView.visibleTargets;
+        _friendlyUnits = new List<Transform>(GameObject.FindGameObjectsWithTag(_faction.ToString()).Select(go => go.transform));
     }
 
     // Update is called once per frame
@@ -35,11 +39,7 @@ public class UnitSpotter : MonoBehaviour
                 if (hit.collider.CompareTag(_targetTag)) {
                     //Transform target = hit.collider.transform;
                     //if (_visibleTargets.Contains(target)) {
-                        UnitHighlight unitHighlight = Instantiate(_assaultDronePrefab, transform.position - Vector3.up*5, Quaternion.identity);
-                        unitHighlight.Init(hit.transform, this);
-                        _droneCamera.enabled = false;
-                        GetComponent<PlayerInput>().enabled = false;
-                        GetComponent<Drone_Inputs>().enabled = false;
+                        SpawnAssaultDrone(hit);
                     //}
                 }
             }
@@ -58,5 +58,23 @@ public class UnitSpotter : MonoBehaviour
         _droneCamera.enabled = true;
         GetComponent<PlayerInput>().enabled = true;
         GetComponent<Drone_Inputs>().enabled = true;
+    }
+
+    private void SpawnAssaultDrone(RaycastHit hit) {
+        Transform selectedFriendly = null;
+        foreach (Transform friendly in _friendlyUnits) {
+            if (Vector3.Distance(friendly.position, hit.point) < 100) {
+                selectedFriendly = friendly;
+                break;
+            }
+        }
+        if (selectedFriendly == null) return;
+
+        UnitHighlight unitHighlight = Instantiate(_assaultDronePrefab, 
+            selectedFriendly.position + Vector3.up*5, Quaternion.LookRotation(hit.point - selectedFriendly.position));
+        unitHighlight.Init(hit.transform, this);
+        _droneCamera.enabled = false;
+        GetComponent<PlayerInput>().enabled = false;
+        GetComponent<Drone_Inputs>().enabled = false;
     }
 }

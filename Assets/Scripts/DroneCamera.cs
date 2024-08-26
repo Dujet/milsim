@@ -37,6 +37,7 @@ public class DroneCamera : MonoBehaviour
         _cam.transform.rotation = Quaternion.Euler(-rotY, rotX, 0f);
     }
 
+    // TODO: fix starting camera rotation being awkward
     void FixedUpdate() {
         _cam.transform.position = _drone.position + _offset;
         

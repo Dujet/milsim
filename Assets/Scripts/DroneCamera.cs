@@ -37,7 +37,6 @@ public class DroneCamera : MonoBehaviour
         rotY = _drone.transform.rotation.eulerAngles.y;
     }
 
-    // TODO: fix starting camera rotation being awkward
     void FixedUpdate() {
         _cam.transform.position = _drone.position + _offset;
         

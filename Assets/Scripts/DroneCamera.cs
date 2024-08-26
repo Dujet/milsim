@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Autodesk.Fbx;
 using Polybrush;
 using UnityEngine;
 
@@ -32,9 +33,8 @@ public class DroneCamera : MonoBehaviour
     {
         _cam.transform.position = _drone.position + _offset;
         _targetFOV = _cam.fieldOfView;
-        rotX = _drone.rotation.eulerAngles.x;
+        rotX = _drone.rotation.eulerAngles.x - 180;
         rotY = _drone.transform.rotation.eulerAngles.y;
-        _cam.transform.rotation = Quaternion.Euler(-rotY, rotX, 0f);
     }
 
     // TODO: fix starting camera rotation being awkward

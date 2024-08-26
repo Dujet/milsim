@@ -12,12 +12,20 @@ public class UnitHighlight : MonoBehaviour
     private RawImage _targetMarker;
     [SerializeField] private Canvas _canvas;
 
+    // TODO: find way to remove overlapping markers
     public void Init(Transform target, UnitSpotter otherDroneCamera) {
         _target = target;
         _otherDroneCamera = otherDroneCamera;
 
         _targetMarker = Instantiate(_targetMarkerPrefab, _canvas.transform);
         _targetMarker.color = Color.red;
+        
+        Canvas markerCanvas = _targetMarker.GetComponent<Canvas>();
+        if (markerCanvas == null) {
+            markerCanvas = _targetMarker.gameObject.AddComponent<Canvas>();
+        }
+        markerCanvas.overrideSorting = true;
+        markerCanvas.sortingOrder = 2;
     }
 
     void Awake() {

@@ -17,6 +17,8 @@ public class UnitHighlight : MonoBehaviour
         _target = target;
         _otherDroneCamera = otherDroneCamera;
 
+        return; // debug
+
         _targetMarker = Instantiate(_targetMarkerPrefab, _canvas.transform);
         _targetMarker.color = Color.red;
         
@@ -35,6 +37,7 @@ public class UnitHighlight : MonoBehaviour
     void Update() {
         if (_target == null) return;
 
+        return; // debug
         // Check if target is behind camera
         Vector3 direction = (_target.position - Camera.main.transform.position).normalized;
         bool isBehind = Vector3.Dot(direction, Camera.main.transform.forward) <= 0;

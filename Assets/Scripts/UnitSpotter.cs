@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ public class UnitSpotter : MonoBehaviour
     [SerializeField] private UnitHighlight _assaultDronePrefab;
     private DroneCamera _droneCamera;
     private List<Transform> _friendlyUnits;
+    public static Action<Transform> OnTargetSelected;
 
     void Awake() {
         _droneCamera = GetComponent<DroneCamera>();
@@ -40,6 +42,7 @@ public class UnitSpotter : MonoBehaviour
                     //Transform target = hit.collider.transform;
                     //if (_visibleTargets.Contains(target)) {
                         SpawnAssaultDrone(hit);
+                        OnTargetSelected?.Invoke(hit.transform);
                     //}
                 }
             }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Android;
 using UnityEngine.UI;
 
 public class HUDController : MonoBehaviour
@@ -9,7 +10,8 @@ public class HUDController : MonoBehaviour
     [SerializeField] private GameObject _canvas;
     [SerializeField] private GameObject _targetMarkerPrefab;
     [SerializeField] private FieldOfView _fieldOfView;
-    private List<GameObject> _targetMarkers = new List<GameObject>();
+    private Dictionary<Transform, GameObject> _targetMarkers = new Dictionary<Transform, GameObject>();
+    private Transform _selectedTarget;
     //private List<Transform> _targets;
 
     
@@ -24,38 +26,49 @@ public class HUDController : MonoBehaviour
         _fieldOfView.OnVisibleTargetsChanged -= UpdateTargetMarkers;
     }
 
+    void OnEnable() {
+        UnitSpotter.OnTargetSelected += ChangeMarkerColor;
+    }
+
+    void OnDisable() {
+        UnitSpotter.OnTargetSelected -= ChangeMarkerColor;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < _fieldOfView.visibleTargets.Count; i++)
-        {
-            if (_fieldOfView.visibleTargets[i] != null)
-            {
-                Vector3 screenPos = Camera.main.WorldToScreenPoint(_fieldOfView.visibleTargets[i].position);
-                _targetMarkers[i].transform.position = screenPos;
-            }
+        foreach (var targetMarker in _targetMarkers) {
+            targetMarker.Value.transform.position = Camera.main.WorldToScreenPoint(targetMarker.Key.position);
         }
     }
 
     private void UpdateTargetMarkers() {
-        foreach (var targetMarker in _targetMarkers) {
+        foreach (var targetMarker in _targetMarkers.Values) {
             Destroy(targetMarker);
         }
         _targetMarkers.Clear();
 
-        _fieldOfView.visibleTargets = new List<Transform>(_fieldOfView.visibleTargets);
+        //_fieldOfView.visibleTargets = new List<Transform>(_fieldOfView.visibleTargets);
 
         foreach (var target in _fieldOfView.visibleTargets) {
             GameObject targetMarker = Instantiate(_targetMarkerPrefab, _canvas.transform);
 
-            // Check if target is behind camera
-            Vector3 direction = (target.position - Camera.main.transform.position).normalized;
-            bool isBehind = Vector3.Dot(direction, Camera.main.transform.forward) <= 0;
-            targetMarker.GetComponent<RawImage>().enabled = !isBehind;
+            if (target == _selectedTarget) {
+                targetMarker.GetComponent<RawImage>().color = Color.red;
+            }
 
             // Update target marker position
             targetMarker.transform.position = Camera.main.WorldToScreenPoint(target.position);
-            _targetMarkers.Add(targetMarker);
+            _targetMarkers[target] = targetMarker;
+        }
+    }
+
+    private void ChangeMarkerColor(Transform target)
+    {
+        if (_targetMarkers.TryGetValue(target, out GameObject targetMarker)) {
+            _selectedTarget = target;
+            RawImage image = targetMarker.GetComponent<RawImage>();
+            image.color = Color.red;
         }
     }
 }

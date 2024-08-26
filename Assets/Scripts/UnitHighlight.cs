@@ -12,7 +12,6 @@ public class UnitHighlight : MonoBehaviour
     private RawImage _targetMarker;
     [SerializeField] private Canvas _canvas;
 
-    // TODO: find way to remove overlapping markers
     public void Init(Transform target, UnitSpotter otherDroneCamera) {
         _target = target;
         _otherDroneCamera = otherDroneCamera;

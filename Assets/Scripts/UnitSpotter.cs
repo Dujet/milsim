@@ -42,7 +42,6 @@ public class UnitSpotter : MonoBehaviour
                     //Transform target = hit.collider.transform;
                     //if (_visibleTargets.Contains(target)) {
                         SpawnAssaultDrone(hit);
-                        OnTargetSelected?.Invoke(hit.transform);
                     //}
                 }
             }
@@ -66,12 +65,14 @@ public class UnitSpotter : MonoBehaviour
     private void SpawnAssaultDrone(RaycastHit hit) {
         Transform selectedFriendly = null;
         foreach (Transform friendly in _friendlyUnits) {
-            if (Vector3.Distance(friendly.position, hit.point) < 100) {
+            if (Vector3.Distance(friendly.position, hit.point) < 500) {
                 selectedFriendly = friendly;
                 break;
             }
         }
         if (selectedFriendly == null) return;
+
+        OnTargetSelected?.Invoke(hit.transform);
 
         UnitHighlight unitHighlight = Instantiate(_assaultDronePrefab, 
             selectedFriendly.position + Vector3.up*5, Quaternion.LookRotation(hit.point - selectedFriendly.position));

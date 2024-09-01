@@ -42,7 +42,10 @@ public class HUDController : MonoBehaviour
         }
     }
 
+    // TODO: fix selected target marker dissapearing when out of FOV - create marker for selected target
     private void UpdateTargetMarkers() {
+        if (_fieldOfView.visibleTargets == null) return;
+
         foreach (var targetMarker in _targetMarkers.Values) {
             Destroy(targetMarker);
         }
@@ -51,6 +54,7 @@ public class HUDController : MonoBehaviour
         //_fieldOfView.visibleTargets = new List<Transform>(_fieldOfView.visibleTargets);
 
         foreach (var target in _fieldOfView.visibleTargets) {
+            if (target == null) continue;
             GameObject targetMarker = Instantiate(_targetMarkerPrefab, _canvas.transform);
 
             if (target == _selectedTarget) {

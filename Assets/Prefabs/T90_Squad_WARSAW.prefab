@@ -407,7 +407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewAngle: 120
-  viewRadius: 100
+  viewRadius: 200
   obstacleMask:
     serializedVersion: 2
     m_Bits: 128
@@ -626,7 +626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewAngle: 120
-  viewRadius: 100
+  viewRadius: 200
   obstacleMask:
     serializedVersion: 2
     m_Bits: 128
@@ -786,7 +786,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewAngle: 120
-  viewRadius: 100
+  viewRadius: 200
   obstacleMask:
     serializedVersion: 2
     m_Bits: 128

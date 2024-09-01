@@ -65,6 +65,13 @@ public class HUDController : MonoBehaviour
             targetMarker.transform.position = Camera.main.WorldToScreenPoint(target.position);
             _targetMarkers[target] = targetMarker;
         }
+
+        if (_selectedTarget != null && !_targetMarkers.ContainsKey(_selectedTarget)) {
+            GameObject targetMarker = Instantiate(_targetMarkerPrefab, _canvas.transform);
+            targetMarker.GetComponent<RawImage>().color = Color.red;
+            targetMarker.transform.position = Camera.main.WorldToScreenPoint(_selectedTarget.position);
+            _targetMarkers[_selectedTarget] = targetMarker;
+        }
     }
 
     private void ChangeMarkerColor(Transform target)

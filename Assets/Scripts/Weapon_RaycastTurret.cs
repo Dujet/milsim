@@ -14,6 +14,10 @@ public class Weapon_RaycastTurret : Weapon_Raycast
 
     // NOTE: explore calculating combined angle of turret and barrel
     private bool WeaponIsAligned(Transform target) {
+        if (target == null) {
+            turretController.ClearTarget();
+            return false;
+        }
         // calculate turret to target angle on the xz plane
         Vector3 targetDirection = target.position - barrel.position;
         //targetDirection.y = 0;

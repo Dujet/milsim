@@ -64,10 +64,11 @@ public class UnitSpotter : MonoBehaviour
 
     private void SpawnAssaultDrone(RaycastHit hit) {
         Transform selectedFriendly = null;
+        float distance = Mathf.Infinity;
         foreach (Transform friendly in _friendlyUnits) {
-            if (Vector3.Distance(friendly.position, hit.point) < 500) {
+            if (Vector3.Distance(friendly.position, hit.point) < distance) {
                 selectedFriendly = friendly;
-                break;
+                distance = Vector3.Distance(friendly.position, hit.point);
             }
         }
         if (selectedFriendly == null) return;

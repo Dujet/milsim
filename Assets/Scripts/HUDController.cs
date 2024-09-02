@@ -66,7 +66,7 @@ public class HUDController : MonoBehaviour
             _targetMarkers[target] = targetMarker;
         }
 
-        if (_selectedTarget != null && !_targetMarkers.ContainsKey(_selectedTarget)) {
+        if (_selectedTarget != null && !_targetMarkers.ContainsKey(_selectedTarget) && !_selectedTarget.GetComponent<Health>().IsDead) {
             GameObject targetMarker = Instantiate(_targetMarkerPrefab, _canvas.transform);
             targetMarker.GetComponent<RawImage>().color = Color.red;
             targetMarker.transform.position = Camera.main.WorldToScreenPoint(_selectedTarget.position);

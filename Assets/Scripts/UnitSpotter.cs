@@ -60,6 +60,7 @@ public class UnitSpotter : MonoBehaviour
         _droneCamera.enabled = true;
         GetComponent<PlayerInput>().enabled = true;
         GetComponent<Drone_Inputs>().enabled = true;
+        this.enabled = true;
     }
 
     private void SpawnAssaultDrone(RaycastHit hit) {
@@ -81,5 +82,6 @@ public class UnitSpotter : MonoBehaviour
         _droneCamera.enabled = false;
         GetComponent<PlayerInput>().enabled = false;
         GetComponent<Drone_Inputs>().enabled = false;
+        this.enabled = false;
     }
 }

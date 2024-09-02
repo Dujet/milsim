@@ -70,6 +70,7 @@ public class FieldOfView : MonoBehaviour
         Transform closestTarget = null;
         float minDistance = Mathf.Infinity;
         foreach (Transform target in visibleTargets) {
+            if (target == null) continue;
             float distance = Vector3.Distance(transform.position, target.position);
             if (distance < minDistance) {
                 minDistance = distance;

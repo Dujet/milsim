@@ -38,6 +38,7 @@ public class HUDController : MonoBehaviour
     void Update()
     {
         foreach (var targetMarker in _targetMarkers) {
+            DisableIfBehindCamera(targetMarker.Key, targetMarker.Value);
             targetMarker.Value.transform.position = Camera.main.WorldToScreenPoint(targetMarker.Key.position);
         }
     }
@@ -56,6 +57,7 @@ public class HUDController : MonoBehaviour
         foreach (var target in _fieldOfView.visibleTargets) {
             if (target == null) continue;
             GameObject targetMarker = Instantiate(_targetMarkerPrefab, _canvas.transform);
+            DisableIfBehindCamera(target, targetMarker);
 
             if (target == _selectedTarget) {
                 targetMarker.GetComponent<RawImage>().color = Color.red;
@@ -68,6 +70,7 @@ public class HUDController : MonoBehaviour
 
         if (_selectedTarget != null && !_targetMarkers.ContainsKey(_selectedTarget) && !_selectedTarget.GetComponent<Health>().IsDead) {
             GameObject targetMarker = Instantiate(_targetMarkerPrefab, _canvas.transform);
+            DisableIfBehindCamera(_selectedTarget, targetMarker);
             targetMarker.GetComponent<RawImage>().color = Color.red;
             targetMarker.transform.position = Camera.main.WorldToScreenPoint(_selectedTarget.position);
             _targetMarkers[_selectedTarget] = targetMarker;
@@ -81,5 +84,11 @@ public class HUDController : MonoBehaviour
             RawImage image = targetMarker.GetComponent<RawImage>();
             image.color = Color.red;
         }
+    }
+
+    private void DisableIfBehindCamera(Transform target, GameObject targetMarker) {
+        Vector3 direction = (target.position - Camera.main.transform.position).normalized;
+            bool isBehind = Vector3.Dot(direction, Camera.main.transform.forward) <= 0;
+            targetMarker.GetComponent<RawImage>().enabled = !isBehind;
     }
 }

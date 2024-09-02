@@ -72,7 +72,8 @@ public class UnitAttackState : IUnitState
         Transform newTarget = aiStateManager.fov.GetClosestTarget();
         if (newTarget == null || newTarget == target) return false;
 
-        Health newTargetHealth = target.GetComponent<Health>();
+        Health newTargetHealth;
+        if (!newTarget.TryGetComponent(out newTargetHealth)) return false;
         if (newTargetHealth.IsDead) return false;
 
         target = newTarget;

@@ -6,6 +6,7 @@ public class Health : MonoBehaviour
 {
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private float currentHealth = 100f;
+    [SerializeField] private DeathEvent _deathEvent;
     private AIStateManager aiStateManager;
     private bool isDead;
 
@@ -30,13 +31,11 @@ public class Health : MonoBehaviour
     private void Die()
     {
         if (isDead) return; // can't die twice
-        
         isDead = true;
-        //Destroy(gameObject);
-        // call the death animation or
-        // enter death state
-        aiStateManager.ChangeState(new UnitDeathState(aiStateManager));
-        return;
+
+        if (_deathEvent != null) {
+            _deathEvent.OnDeath();
+        }
     }
 
     public bool IsLethal(float damage) {

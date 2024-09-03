@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Autodesk.Fbx;
-using Polybrush;
 using UnityEngine;
 
 public class DroneCamera : MonoBehaviour
@@ -52,7 +50,8 @@ public class DroneCamera : MonoBehaviour
         // TODO: make zooming in/out logarithmic
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         //_cam.fieldOfView -= scroll * 10;
-        _targetFOV -= scroll * 10;
+        _targetFOV -= scroll * 10 * _zoomSpeed * Mathf.Log10(_targetFOV);
+        _targetFOV = Mathf.Clamp(_targetFOV, 15, 60);
         _cam.fieldOfView = Mathf.Lerp(_cam.fieldOfView, _targetFOV, Time.deltaTime * _zoomSpeed);
 
         // Update drone rotation marker

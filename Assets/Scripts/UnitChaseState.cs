@@ -14,6 +14,11 @@ public class UnitChaseState : IUnitState
     public void Enter()
     {
         Debug.Log($"{aiStateManager.gameObject.name}:Entering Chase State");
+        if (target == null) {
+            aiStateManager.ChangeState(new UnitPatrolState(aiStateManager));
+            Debug.Log($"{aiStateManager.gameObject.name}:Chase target is null");
+            return;
+        }
         aiStateManager.agent.SetDestination(target.position);
     }
 

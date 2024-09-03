@@ -15,10 +15,11 @@ public class UnitDeathState : IUnitState
     {
         Debug.Log($"{aiStateManager.gameObject.name}:Bro died");
         aiStateManager.agent.ResetPath();
-        aiStateManager.agent.enabled = false;
+        //aiStateManager.agent.enabled = false;
         aiStateManager.fov.enabled = false;
-        aiStateManager.moveOrderGenerator.enabled = false;
-        aiStateManager.Weapon.enabled = false;
+        //aiStateManager.moveOrderGenerator.enabled = false;
+        // aiStateManager.Weapon.enabled = false;
+        aiStateManager.Weapon.StopAttack();
 
         // If the unit is a squad leader, change the leader, otherwise remove the unit from the squad
         // TODO: explore just having a RemoveSquadMember method which check all this

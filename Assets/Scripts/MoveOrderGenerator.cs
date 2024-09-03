@@ -80,7 +80,6 @@ public class MoveOrderGenerator : MonoBehaviour
         return agent.hasPath || agent.pathPending;
     }
 
-    // TODO: check if exists bug where a cell is skipped on z axis
     private void advanceToNextCell() {
         //currentCell = targetCell;
         currentCell = grid.WorldToCell(agent.transform.position);

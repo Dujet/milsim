@@ -28,6 +28,13 @@ public class UnitAttackState : IUnitState
     {
         // Debug.Log("Executing Attack State");
 
+        // If the target is null, try to find a new target or start patrolling
+        if (target == null) {
+            if (!updateTarget()) {
+                aiStateManager.ChangeState(new UnitPatrolState(aiStateManager));
+            }
+        }
+
         // If the (alive) target is not visible or out of range, change to chase state
         if ((!aiStateManager.fov.IsTargetVisible(target) ||
             Vector3.Distance(aiStateManager.transform.position, target.position) > aiStateManager.AttackRange)
@@ -72,7 +79,8 @@ public class UnitAttackState : IUnitState
         Transform newTarget = aiStateManager.fov.GetClosestTarget();
         if (newTarget == null || newTarget == target) return false;
 
-        Health newTargetHealth = target.GetComponent<Health>();
+        Health newTargetHealth;
+        if (!newTarget.TryGetComponent(out newTargetHealth)) return false;
         if (newTargetHealth.IsDead) return false;
 
         target = newTarget;

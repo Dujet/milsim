@@ -22,6 +22,11 @@ public class FieldOfView : MonoBehaviour
         StartCoroutine(FindTargetsWithDelay(1f / scanFrequency));
     }
 
+    void OnDisable() {
+        visibleTargets.Clear();
+        StopCoroutine(FindTargetsWithDelay(1f / scanFrequency));
+    }
+
     IEnumerator FindTargetsWithDelay(float delay) {
         while (true) {
             yield return new WaitForSeconds(delay);
@@ -65,6 +70,7 @@ public class FieldOfView : MonoBehaviour
         Transform closestTarget = null;
         float minDistance = Mathf.Infinity;
         foreach (Transform target in visibleTargets) {
+            if (target == null) continue;
             float distance = Vector3.Distance(transform.position, target.position);
             if (distance < minDistance) {
                 minDistance = distance;

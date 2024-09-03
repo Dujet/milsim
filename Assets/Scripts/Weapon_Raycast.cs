@@ -16,7 +16,7 @@ public class Weapon_Raycast : Weapon
         {
             Debug.Log($"{gameObject.name}:Raycast hit {hit.transform.gameObject.name}");
             Debug.DrawLine(transform.position, hit.point, Color.green, 2.0f);
-            Health targetHealth = hit.transform.GetComponent<Health>();
+            Health targetHealth = hit.transform.GetComponentInChildren<Health>();
             CreateImpactEffect(hit.point, hit.normal);
             if (targetHealth != null)
             {

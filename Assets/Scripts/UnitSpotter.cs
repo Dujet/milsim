@@ -42,7 +42,6 @@ public class UnitSpotter : MonoBehaviour
                     //Transform target = hit.collider.transform;
                     //if (_visibleTargets.Contains(target)) {
                         SpawnAssaultDrone(hit);
-                        OnTargetSelected?.Invoke(hit.transform);
                     //}
                 }
             }
@@ -61,17 +60,21 @@ public class UnitSpotter : MonoBehaviour
         _droneCamera.enabled = true;
         GetComponent<PlayerInput>().enabled = true;
         GetComponent<Drone_Inputs>().enabled = true;
+        this.enabled = true;
     }
 
     private void SpawnAssaultDrone(RaycastHit hit) {
         Transform selectedFriendly = null;
+        float distance = Mathf.Infinity;
         foreach (Transform friendly in _friendlyUnits) {
-            if (Vector3.Distance(friendly.position, hit.point) < 100) {
+            if (Vector3.Distance(friendly.position, hit.point) < distance) {
                 selectedFriendly = friendly;
-                break;
+                distance = Vector3.Distance(friendly.position, hit.point);
             }
         }
         if (selectedFriendly == null) return;
+
+        OnTargetSelected?.Invoke(hit.transform);
 
         UnitHighlight unitHighlight = Instantiate(_assaultDronePrefab, 
             selectedFriendly.position + Vector3.up*5, Quaternion.LookRotation(hit.point - selectedFriendly.position));
@@ -79,5 +82,6 @@ public class UnitSpotter : MonoBehaviour
         _droneCamera.enabled = false;
         GetComponent<PlayerInput>().enabled = false;
         GetComponent<Drone_Inputs>().enabled = false;
+        this.enabled = false;
     }
 }

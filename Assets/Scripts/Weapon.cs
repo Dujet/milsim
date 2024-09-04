@@ -34,6 +34,7 @@ public abstract class Weapon : MonoBehaviour
         set { attackTimer = value; }
     }
 
+    // TODO: change to protected and test
     public abstract void Attack(Transform target);
 
     public virtual bool Fire(Transform target) {

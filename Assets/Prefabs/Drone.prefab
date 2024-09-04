@@ -236,6 +236,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxPower: 10
+--- !u!1 &5537200141742060879
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5425982338236067804}
+  m_Layer: 0
+  m_Name: CameraAttachmentPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5425982338236067804
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5537200141742060879}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.032882214, z: -0.202}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4705756126094719992}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5541440976911233609
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,6 +371,7 @@ Transform:
   m_Children:
   - {fileID: 6861050412529043019}
   - {fileID: 5036245280441196516}
+  - {fileID: 5425982338236067804}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5115347585201548308
@@ -424,6 +456,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 1
+  startDrag: 0.5
+  startAngularDrag: 0.05
   minMaxPitch: 45
   minMaxRoll: 45
   yawPower: 4
@@ -441,9 +475,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cam: {fileID: 0}
-  _drone: {fileID: 4705756126094719992}
-  _offset: {x: 0, y: 0, z: 0}
+  _cameraAttachmentPoint: {fileID: 5425982338236067804}
+  _offset: {x: 0, y: 0.032882214, z: -0.202}
   _zoomSpeed: 10
+  _rotSpeed: 5
 --- !u!114 &1752632418764833719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,8 +492,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fieldOfView: {fileID: 0}
-  _showDebugGizmos: 1
+  _showDebugGizmos: 0
   _camera: {fileID: 0}
+  _faction: 0
   _targetTag: WARSAW
   _assaultDronePrefab: {fileID: 7788578227327713831, guid: d7b4fec6648a498458f27fb3bdf70a60, type: 3}
 --- !u!1001 &3236644843723050841

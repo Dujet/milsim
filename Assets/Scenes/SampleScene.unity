@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 3209.372, g: 2230.9631, b: 1897.4948, a: 1}
+  m_IndirectSpecularColor: {r: 2991.866, g: 1884.4226, b: 1246.7338, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -254,6 +254,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1363767778}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &358804454
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 358804455}
+  m_Layer: 0
+  m_Name: CameraAttachmentPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &358804455
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358804454}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.032882214, z: -0.202}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1741735575}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
@@ -795,6 +826,11 @@ Transform:
   - {fileID: 1117713953}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1440067242 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6861050412529043019, guid: 65844d6a2a762df4e92e9a310fe888e0, type: 3}
+  m_PrefabInstance: {fileID: 5882382639394589059}
+  m_PrefabAsset: {fileID: 0}
 --- !u!850595691 &1538637642
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -1319,6 +1355,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc5d18ec0a11a44db42f89376440e62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1741735575 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4705756126094719992, guid: 65844d6a2a762df4e92e9a310fe888e0, type: 3}
+  m_PrefabInstance: {fileID: 5882382639394589059}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1804010506
 GameObject:
   m_ObjectHideFlags: 0
@@ -1571,6 +1612,14 @@ PrefabInstance:
       propertyPath: _cam
       value: 
       objectReference: {fileID: 1699257924}
+    - target: {fileID: 1149498622665068555, guid: 65844d6a2a762df4e92e9a310fe888e0, type: 3}
+      propertyPath: _drone
+      value: 
+      objectReference: {fileID: 1440067242}
+    - target: {fileID: 1149498622665068555, guid: 65844d6a2a762df4e92e9a310fe888e0, type: 3}
+      propertyPath: _cameraAttachmentPoint
+      value: 
+      objectReference: {fileID: 358804455}
     - target: {fileID: 1752632418764833719, guid: 65844d6a2a762df4e92e9a310fe888e0, type: 3}
       propertyPath: _camera
       value: 
@@ -1633,7 +1682,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4705756126094719992, guid: 65844d6a2a762df4e92e9a310fe888e0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 358804455}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65844d6a2a762df4e92e9a310fe888e0, type: 3}
 --- !u!1660057539 &9223372036854775807

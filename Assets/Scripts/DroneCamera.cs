@@ -6,7 +6,7 @@ using UnityEngine;
 public class DroneCamera : MonoBehaviour
 {
     [SerializeField] private Camera _cam;
-    [SerializeField] private Transform _drone;
+    [SerializeField] private Transform _cameraAttachmentPoint;
     [SerializeField] private Vector3 _offset;
     [SerializeField] private float _zoomSpeed = 10f;
     private float _targetFOV;
@@ -29,14 +29,14 @@ public class DroneCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _cam.transform.position = _drone.position + _offset;
+        _cam.transform.position = _cameraAttachmentPoint.position + _offset;
         _targetFOV = _cam.fieldOfView;
-        rotX = _drone.rotation.eulerAngles.x - 180;
-        rotY = _drone.transform.rotation.eulerAngles.y;
+        rotX = _cameraAttachmentPoint.rotation.eulerAngles.x - 180;
+        rotY = _cameraAttachmentPoint.transform.rotation.eulerAngles.y;
     }
 
     void FixedUpdate() {
-        _cam.transform.position = _drone.position + _offset;
+        _cam.transform.position = _cameraAttachmentPoint.position;
         
         rotX += Input.GetAxis("Mouse X")*_rotSpeed;
         rotY += Input.GetAxis ("Mouse Y")*_rotSpeed;
@@ -55,7 +55,7 @@ public class DroneCamera : MonoBehaviour
         _cam.fieldOfView = Mathf.Lerp(_cam.fieldOfView, _targetFOV, Time.deltaTime * _zoomSpeed);
 
         // Update drone rotation marker
-        Vector3 droneForward = _drone.forward;
+        Vector3 droneForward = _cameraAttachmentPoint.forward;
         droneForward.y = 0;
         Vector3 camForward = _cam.transform.forward;
         camForward.y = 0;

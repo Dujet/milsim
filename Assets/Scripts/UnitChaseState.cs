@@ -26,6 +26,10 @@ public class UnitChaseState : IUnitState
     public void Execute()
     {
         //Debug.Log("Executing Chase State");
+        if (target == null) {
+            aiStateManager.ChangeState(new UnitPatrolState(aiStateManager));
+            return;
+        }
 
         if ((!aiStateManager.fov.IsTargetVisible(target) && !aiStateManager.agent.hasPath) 
              || target.GetComponent<Health>().IsDead) {

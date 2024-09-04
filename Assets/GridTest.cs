@@ -20,15 +20,15 @@ public class GridTest : MonoBehaviour
     }
 
     void OnDrawGizmos() {
-        Gizmos.color = Color.blue;
+        Gizmos.color = Color.white;
         
         int gridWidth = terrainSizeX / (int)grid.cellSize.x;
         int gridLength = terrainSizeZ / (int)grid.cellSize.z;
 
         for (int z = gridLength - 1; z >= 0; z--) {
             for (int x = 0; x < gridWidth; x++) {
-                Vector3 cellCenter = grid.CellToWorld(new Vector3Int(x, 0, z));
-                Gizmos.DrawWireSphere(cellCenter, 20);
+                Vector3 cellCenter = grid.GetCellCenterWorld(new Vector3Int(x, 0, z));
+                Gizmos.DrawWireCube(cellCenter, grid.cellSize);
             }
         }
     }

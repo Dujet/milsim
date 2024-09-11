@@ -12,7 +12,7 @@ public class DroneCamera : MonoBehaviour
     private float _targetFOV;
     private float rotX;
     private float rotY;
-    [SerializeField] private float _rotSpeed = 5f;
+    [SerializeField] private float _rotSpeed = 2f;
     private RectTransform _droneRotationMarker;
     private float _cameraDroneAngle;
 

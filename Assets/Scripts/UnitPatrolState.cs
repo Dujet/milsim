@@ -34,17 +34,22 @@ public class UnitPatrolState : IUnitState
             aiStateManager.ChangeState(new UnitChaseState(aiStateManager, target));
 
         if (aiStateManager.IsFollower || target.GetComponent<Health>().IsDead) return;
-        List<AIStateManager> squadMembers = aiStateManager.GetSquadMembers();
-        Debug.Log($"{aiStateManager.gameObject.name}:Alerting {squadMembers.Count} squad members!");
-        foreach (AIStateManager member in squadMembers) {
-            if (member?.CurrentState is UnitPatrolState)
-                member.ChangeState(new UnitChaseState(member, target));
-        }
+        AlertSquadMembers(target);
     }
 
     public void Exit()
     {
         Debug.Log($"{aiStateManager.gameObject.name}:Exiting Patrol State");
         aiStateManager.agent.autoBraking = true;
+    }
+
+    public void AlertSquadMembers(Transform target) {
+        if (target == null) return;
+        List<AIStateManager> squadMembers = aiStateManager.GetSquadMembers();
+        Debug.Log($"{aiStateManager.gameObject.name}:Alerting {squadMembers.Count} squad members!");
+        foreach (AIStateManager member in squadMembers) {
+            if (member?.CurrentState is UnitPatrolState)
+                member.ChangeState(new UnitChaseState(member, target));
+        }
     }
 }

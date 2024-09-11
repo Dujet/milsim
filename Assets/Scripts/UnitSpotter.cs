@@ -42,6 +42,8 @@ public class UnitSpotter : MonoBehaviour
                     //Transform target = hit.collider.transform;
                     //if (_visibleTargets.Contains(target)) {
                         SpawnAssaultDrone(hit);
+                        Debug.Log($"Target selected: {hit.collider.gameObject.name}");
+                        AlertNearestSquad(hit.transform);
                     //}
                 }
             }
@@ -64,14 +66,7 @@ public class UnitSpotter : MonoBehaviour
     }
 
     private void SpawnAssaultDrone(RaycastHit hit) {
-        Transform selectedFriendly = null;
-        float distance = Mathf.Infinity;
-        foreach (Transform friendly in _friendlyUnits) {
-            if (Vector3.Distance(friendly.position, hit.point) < distance) {
-                selectedFriendly = friendly;
-                distance = Vector3.Distance(friendly.position, hit.point);
-            }
-        }
+        Transform selectedFriendly = FindNearestFriendly(hit.point);
         if (selectedFriendly == null) return;
 
         OnTargetSelected?.Invoke(hit.transform);
@@ -83,5 +78,38 @@ public class UnitSpotter : MonoBehaviour
         GetComponent<PlayerInput>().enabled = false;
         GetComponent<Drone_Inputs>().enabled = false;
         this.enabled = false;
+    }
+
+    private Transform FindNearestFriendly(Vector3 location) {
+        Transform selectedFriendly = null;
+        float distance = Mathf.Infinity;
+        foreach (Transform friendly in _friendlyUnits) {
+            if (Vector3.Distance(friendly.position, location) < distance) {
+                selectedFriendly = friendly;
+                distance = Vector3.Distance(friendly.position, location);
+            }
+        }
+        return selectedFriendly;
+    }
+
+    private void AlertNearestSquad(Transform target) {
+        Transform selectedFriendly = FindNearestFriendly(transform.position);
+        if (selectedFriendly == null) return;
+        Debug.Log("Debug 1");
+
+        AIStateManager selectedFriendlyAI = selectedFriendly.GetComponent<AIStateManager>();
+        if (selectedFriendlyAI == null) return;
+        Debug.Log("Debug 1.5");
+
+        AIStateManager leader = selectedFriendlyAI.moveOrderGenerator.Leader.GetComponent<AIStateManager>();
+        if (leader == null) return;
+        Debug.Log("Debug 2");
+
+        if (leader.CurrentState is UnitPatrolState patrolState) {
+            Debug.Log("Debug 3");
+            Debug.Log($"{leader.gameObject.name}: Alerting squad members from drone info!");
+            patrolState.AlertSquadMembers(target);
+            leader.ChangeState(new UnitChaseState(leader, target));
+        }
     }
 }

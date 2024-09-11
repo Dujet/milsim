@@ -478,7 +478,7 @@ MonoBehaviour:
   _cameraAttachmentPoint: {fileID: 8423984113060116781}
   _offset: {x: 0, y: 0.032882214, z: -0.202}
   _zoomSpeed: 10
-  _rotSpeed: 5
+  _rotSpeed: 2
 --- !u!114 &5103896763798275882
 MonoBehaviour:
   m_ObjectHideFlags: 0

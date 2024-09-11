@@ -35,6 +35,10 @@ public class MoveOrderGenerator : MonoBehaviour
         get { return squad; }
     }
 
+    public NavMeshAgent Leader {
+        get { return agent; }
+    }
+
     void Awake() {
         grid = GameObject.Find("Grid").GetComponent<Grid>();
         squad = new List<NavMeshAgent>(GetComponentsInChildren<NavMeshAgent>());

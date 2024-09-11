@@ -4,6 +4,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.UI;
+using System.Linq;
+using System;
 
 public class HUDController : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class HUDController : MonoBehaviour
     [SerializeField] private FieldOfView _fieldOfView;
     private Dictionary<Transform, GameObject> _targetMarkers = new Dictionary<Transform, GameObject>();
     private Transform _selectedTarget;
+    private Dictionary<Transform, GameObject> _friendlyMarkers;
     //private List<Transform> _targets;
 
     void Awake() {
@@ -22,6 +25,13 @@ public class HUDController : MonoBehaviour
     void Start()
     {
         _fieldOfView.OnVisibleTargetsChanged += UpdateTargetMarkers;
+        _friendlyMarkers = GameObject.FindGameObjectsWithTag("NATO").Select(go => go.transform).ToDictionary(go => go, 
+            go => {
+            GameObject marker = Instantiate(_targetMarkerPrefab, _canvas.transform);
+            marker.GetComponent<RawImage>().color = Color.green;
+            return marker;
+            });
+
         UpdateTargetMarkers();
     }
 
@@ -43,6 +53,11 @@ public class HUDController : MonoBehaviour
         foreach (var targetMarker in _targetMarkers) {
             DisableIfBehindCamera(targetMarker.Key, targetMarker.Value);
             targetMarker.Value.transform.position = Camera.main.WorldToScreenPoint(targetMarker.Key.position);
+        }
+
+        foreach (var friendlyMarker in _friendlyMarkers) {
+            DisableIfBehindCamera(friendlyMarker.Key, friendlyMarker.Value);
+            friendlyMarker.Value.transform.position = Camera.main.WorldToScreenPoint(friendlyMarker.Key.position);
         }
     }
 

@@ -35,11 +35,11 @@ public class DroneCamera : MonoBehaviour
         rotY = _cameraAttachmentPoint.transform.rotation.eulerAngles.y;
     }
 
-    void FixedUpdate() {
+    void LateUpdate() {
         _cam.transform.position = _cameraAttachmentPoint.position;
         
-        rotX += Input.GetAxis("Mouse X")*_rotSpeed;
-        rotY += Input.GetAxis ("Mouse Y")*_rotSpeed;
+        rotX += Input.GetAxis("Mouse X") * _rotSpeed * _cam.fieldOfView / 60;
+        rotY += Input.GetAxis ("Mouse Y") * _rotSpeed * _cam.fieldOfView / 60;
 
         rotY = Mathf.Clamp(rotY, -90f, 90f);      
 

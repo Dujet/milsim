@@ -14,6 +14,9 @@ public class HUDController : MonoBehaviour
     private Transform _selectedTarget;
     //private List<Transform> _targets;
 
+    void Awake() {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
     
     // Start is called before the first frame update
     void Start()

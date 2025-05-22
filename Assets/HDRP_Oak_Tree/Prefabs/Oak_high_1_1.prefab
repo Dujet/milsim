@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 2916159173418334780}
   - component: {fileID: 1124967627048374006}
   - component: {fileID: 3325738057543802768}
+  - component: {fileID: 6406787911048413987}
+  - component: {fileID: 8695313989979459686}
   m_Layer: 0
   m_Name: Oak_high_1_1
   m_TagString: Untagged
@@ -108,3 +110,45 @@ CapsuleCollider:
   m_Height: 13.37
   m_Direction: 1
   m_Center: {x: 0, y: 6.2, z: 0}
+--- !u!135 &6406787911048413987
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485145988911329059}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 4.9
+  m_Center: {x: -0.29, y: 11.9, z: 0.75}
+--- !u!135 &8695313989979459686
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485145988911329059}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 8.5
+  m_Center: {x: -0.29, y: 11.9, z: 0.75}

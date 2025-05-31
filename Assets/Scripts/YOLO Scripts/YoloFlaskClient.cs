@@ -25,9 +25,11 @@ public class YoloFlaskClient : MonoBehaviour
     public Camera displayCamera;
     public int imageWidth = 640;
     public int imageHeight = 640;
+    [SerializeField] private LayerMask layerMask;
 
     void Start()
     {
+        if (layerMask == 0) Debug.LogWarning("LayerMask is not set.");
     }
 
     void Update()
@@ -44,6 +46,8 @@ public class YoloFlaskClient : MonoBehaviour
         RenderTexture rt = new RenderTexture(imageWidth, imageHeight, 24);
         captureCamera.targetTexture = rt;
         Texture2D screenShot = new Texture2D(imageWidth, imageHeight, TextureFormat.RGB24, false);
+
+        captureCamera.fieldOfView = displayCamera.fieldOfView; // Match FOV with display camera
 
         // Render and read
         captureCamera.Render();
@@ -72,17 +76,19 @@ public class YoloFlaskClient : MonoBehaviour
 
         if (request.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("Response: " + request.downloadHandler.text);
+            //Debug.Log("Response: " + request.downloadHandler.text);
             DetectionResponse detections = JsonUtility.FromJson<DetectionResponse>(request.downloadHandler.text);
 
             foreach (var det in detections.detections)
             {
                 Debug.Log($"Detected class {det.@class} with confidence {det.confidence} at bbox {string.Join(",", det.bbox)}");
-                BBoxUtils.DrawBoundingBox(
-                    BBoxUtils.ConvertYoloToUnityRect(det.bbox, imageWidth, imageHeight, Screen.width, Screen.height),
-                    Color.red,
+                Rect convertedRect = BBoxUtils.ConvertYoloToUnityRect(det.bbox, imageWidth, imageHeight, Screen.width, Screen.height);
+                /* BBoxUtils.DrawBoundingBox(
+                    convertedRect,
+                    det.@class == 0 ? Color.red : Color.gray,
                     displayCamera
-                );
+                ); */
+                ConfirmObjectDetection(convertedRect, det.@class);
             }
         }
         else
@@ -91,5 +97,39 @@ public class YoloFlaskClient : MonoBehaviour
         }
 
         Destroy(screenShot);
+    }
+
+    private void ConfirmObjectDetection(Rect bbox, int classId)
+    {
+        Vector3 screenPoint = new Vector3(bbox.center.x, bbox.center.y, 0f);
+        Ray ray = displayCamera.ScreenPointToRay(screenPoint);
+        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 2f);
+        if (Physics.Raycast(ray, out RaycastHit hit, layerMask))
+        {
+            HandleDetectedObject(hit.transform.root, classId);
+            Debug.DrawLine(ray.origin, hit.point, Color.green, 2f);
+        }
+    }
+
+    private void HandleDetectedObject(Transform detectedObject, int classId)
+    {
+        if (!(detectedObject.CompareTag("Tank") || detectedObject.CompareTag("Truck")))
+        {
+            Debug.LogWarning($"Raycast hit object {detectedObject.name} is not a tank or truck. Tag: {detectedObject.tag}");
+            return;
+        }
+
+        switch (classId)
+        {
+            case 0:
+                Debug.Log($"Raycast hit object of class 0: {detectedObject.name}");
+                break;
+            case 1:
+                Debug.Log($"Raycast hit object of class 1: {detectedObject.name}");
+                break;
+            default:
+                Debug.Log($"Raycast hit object of unknown class {classId}: {detectedObject.name}");
+                break;
+        }
     }
 }

@@ -64,6 +64,7 @@ public class DroneCamera : MonoBehaviour
     }
 
     public void OnDisable() {
+        if (_cam == null) return;
         _cam.enabled = false;
         _cam.GetComponent<AudioListener>().enabled = false;
     }

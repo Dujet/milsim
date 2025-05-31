@@ -43,22 +43,29 @@ public static class BBoxUtils
 
     public static Rect ConvertYoloToUnityRect(float[] yoloBbox, int inputWidth, int inputHeight, int screenWidth, int screenHeight)
     {
+        // YOLO Coordinates to Unity Rect
+        // yoloBbox format: [x1, y1, x2, y2]
         float x1 = yoloBbox[0];
         float y1 = yoloBbox[1];
         float x2 = yoloBbox[2];
         float y2 = yoloBbox[3];
 
-        // Scale from model input to screen size
-        float xScale = (float)screenWidth / inputWidth;
-        float yScale = (float)screenHeight / inputHeight;
+        // Invert y coordinates
+        float y1Inverted = inputHeight - y1;
+        float y2Inverted = inputHeight - y2;
 
-        float boxWidth = (x2 - x1) * xScale;
-        float boxHeight = (y2 - y1) * yScale;
+        // Offset to center the bounding box in the screen space
+        float xOffset = (screenWidth - inputWidth) / 2f;
+        float yOffset = (screenHeight - inputHeight) / 2f;
 
-        float x = x1 * xScale;
-        float y = screenHeight - (y2 * yScale); // Invert Y
+        x1 += xOffset;
+        x2 += xOffset;
+        y1Inverted += yOffset;
+        y2Inverted += yOffset;
 
-        return new Rect(x, y, boxWidth, boxHeight);
+        float width = x2 - x1;
+        float height = y2Inverted - y1Inverted;
+        return new Rect(x1, y1Inverted, width, height);
     }
 
     public static void DrawBoundingBox(Rect bbox, Color color, Camera camera)

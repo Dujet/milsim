@@ -17,67 +17,78 @@ public class HUDController : MonoBehaviour
     private Dictionary<Transform, GameObject> _friendlyMarkers;
     //private List<Transform> _targets;
 
-    void Awake() {
+    void Awake()
+    {
         Cursor.lockState = CursorLockMode.Locked;
     }
-    
+
     // Start is called before the first frame update
     void Start()
     {
         if (_fieldOfView != null) _fieldOfView.OnVisibleTargetsChanged += UpdateTargetMarkers;
-        _friendlyMarkers = GameObject.FindGameObjectsWithTag("NATO").Select(go => go.transform).ToDictionary(go => go, 
-            go => {
-            GameObject marker = Instantiate(_targetMarkerPrefab, _canvas.transform);
-            marker.GetComponent<RawImage>().color = Color.green;
-            return marker;
+        _friendlyMarkers = GameObject.FindGameObjectsWithTag("NATO").Select(go => go.transform).ToDictionary(go => go,
+            go =>
+            {
+                GameObject marker = Instantiate(_targetMarkerPrefab, _canvas.transform);
+                marker.GetComponent<RawImage>().color = Color.green;
+                return marker;
             });
 
         UpdateTargetMarkers();
     }
 
-    void OnDestroy() {
-        _fieldOfView.OnVisibleTargetsChanged -= UpdateTargetMarkers;
+    void OnDestroy()
+    {
+        if (_fieldOfView != null) _fieldOfView.OnVisibleTargetsChanged -= UpdateTargetMarkers;
     }
 
-    void OnEnable() {
+    void OnEnable()
+    {
         UnitSpotter.OnTargetSelected += ChangeMarkerColor;
     }
 
-    void OnDisable() {
+    void OnDisable()
+    {
         UnitSpotter.OnTargetSelected -= ChangeMarkerColor;
     }
 
     // Update is called once per frame
     void Update()
     {
-        foreach (var targetMarker in _targetMarkers) {
+        foreach (var targetMarker in _targetMarkers)
+        {
             DisableIfBehindCamera(targetMarker.Key, targetMarker.Value);
             targetMarker.Value.transform.position = Camera.main.WorldToScreenPoint(targetMarker.Key.position);
         }
 
-        foreach (var friendlyMarker in _friendlyMarkers) {
+        foreach (var friendlyMarker in _friendlyMarkers)
+        {
             DisableIfBehindCamera(friendlyMarker.Key, friendlyMarker.Value);
             friendlyMarker.Value.transform.position = Camera.main.WorldToScreenPoint(friendlyMarker.Key.position);
         }
     }
 
     // TODO: fix selected target marker dissapearing when out of FOV - create marker for selected target
-    private void UpdateTargetMarkers() {
+    private void UpdateTargetMarkers()
+    {
         if (_fieldOfView.visibleTargets == null) return;
 
-        foreach (var targetMarker in _targetMarkers.Values) {
+        foreach (var targetMarker in _targetMarkers.Values)
+        {
             Destroy(targetMarker);
         }
         _targetMarkers.Clear();
 
         //_fieldOfView.visibleTargets = new List<Transform>(_fieldOfView.visibleTargets);
 
-        foreach (var target in _fieldOfView.visibleTargets) {
+        foreach (var target in _fieldOfView.visibleTargets)
+        {
             if (target == null) continue;
             GameObject targetMarker = Instantiate(_targetMarkerPrefab, _canvas.transform);
             DisableIfBehindCamera(target, targetMarker);
 
-            if (target == _selectedTarget) {
+            if (target == _selectedTarget)
+            {
                 targetMarker.GetComponent<RawImage>().color = Color.red;
             }
 
@@ -86,7 +97,8 @@ public class HUDController : MonoBehaviour
             _targetMarkers[target] = targetMarker;
         }
 
-        if (_selectedTarget != null && !_targetMarkers.ContainsKey(_selectedTarget) && !_selectedTarget.GetComponent<Health>().IsDead) {
+        if (_selectedTarget != null && !_targetMarkers.ContainsKey(_selectedTarget) && !_selectedTarget.GetComponent<Health>().IsDead)
+        {
             GameObject targetMarker = Instantiate(_targetMarkerPrefab, _canvas.transform);
             DisableIfBehindCamera(_selectedTarget, targetMarker);
             targetMarker.GetComponent<RawImage>().color = Color.red;
@@ -97,16 +109,18 @@ public class HUDController : MonoBehaviour
 
     private void ChangeMarkerColor(Transform target)
     {
-        if (_targetMarkers.TryGetValue(target, out GameObject targetMarker)) {
+        if (_targetMarkers.TryGetValue(target, out GameObject targetMarker))
+        {
             _selectedTarget = target;
             RawImage image = targetMarker.GetComponent<RawImage>();
             image.color = Color.red;
         }
     }
 
-    private void DisableIfBehindCamera(Transform target, GameObject targetMarker) {
+    public static void DisableIfBehindCamera(Transform target, GameObject targetMarker)
+    {
         Vector3 direction = (target.position - Camera.main.transform.position).normalized;
-            bool isBehind = Vector3.Dot(direction, Camera.main.transform.forward) <= 0;
-            targetMarker.GetComponent<RawImage>().enabled = !isBehind;
+        bool isBehind = Vector3.Dot(direction, Camera.main.transform.forward) <= 0;
+        targetMarker.GetComponent<RawImage>().enabled = !isBehind;
     }
 }

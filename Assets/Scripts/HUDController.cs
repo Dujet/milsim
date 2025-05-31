@@ -24,7 +24,7 @@ public class HUDController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _fieldOfView.OnVisibleTargetsChanged += UpdateTargetMarkers;
+        if (_fieldOfView != null) _fieldOfView.OnVisibleTargetsChanged += UpdateTargetMarkers;
         _friendlyMarkers = GameObject.FindGameObjectsWithTag("NATO").Select(go => go.transform).ToDictionary(go => go, 
             go => {
             GameObject marker = Instantiate(_targetMarkerPrefab, _canvas.transform);

@@ -24,6 +24,8 @@ public class DatasetGenerator : MonoBehaviour
     public string imageFormat = ".jpg";
     public int index = 0;
 
+    public int Index { get => index; private set => index = value; }
+
     // The range of the random position
     public float minX = 0f;
     public float maxX = 1000f;
@@ -118,7 +120,7 @@ public class DatasetGenerator : MonoBehaviour
 
         bool visible = ObjectIsUnobscured(spawnedObject, mainCamera);
         Rect bbox = BBoxUtils.GetScreenSpaceBoundingBox(spawnedObject, mainCamera);
-        DrawBoundingBox(bbox, visible ? Color.green : Color.red, mainCamera);
+        BBoxUtils.DrawBoundingBox(bbox, visible ? Color.green : Color.red, mainCamera);
     }
 
     void RandomizeScene(GameObject[] objectsToSpawn)
@@ -232,7 +234,7 @@ public class DatasetGenerator : MonoBehaviour
         {
             bool visible = ObjectIsUnobscured(obj, mainCamera);
             Rect bbox = BBoxUtils.GetScreenSpaceBoundingBox(obj, mainCamera);
-            DrawBoundingBox(bbox, visible ? Color.green : Color.red, mainCamera);
+            BBoxUtils.DrawBoundingBox(bbox, visible ? Color.green : Color.red, mainCamera);
 
             if (visible)
             {
@@ -313,16 +315,5 @@ public class DatasetGenerator : MonoBehaviour
         }
     }
 
-    private void DrawBoundingBox(Rect bbox, Color color, Camera camera)
-    {
-        Vector3 topLeft = new Vector3(bbox.x, bbox.y, 5);
-        Vector3 topRight = new Vector3(bbox.x + bbox.width, bbox.y, 5);
-        Vector3 bottomLeft = new Vector3(bbox.x, bbox.y + bbox.height, 5);
-        Vector3 bottomRight = new Vector3(bbox.x + bbox.width, bbox.y + bbox.height, 5);
-
-        Debug.DrawLine(camera.ScreenToWorldPoint(topLeft), camera.ScreenToWorldPoint(topRight), color, 2f);
-        Debug.DrawLine(camera.ScreenToWorldPoint(topRight), camera.ScreenToWorldPoint(bottomRight), color, 2f);
-        Debug.DrawLine(camera.ScreenToWorldPoint(bottomRight), camera.ScreenToWorldPoint(bottomLeft), color, 2f);
-        Debug.DrawLine(camera.ScreenToWorldPoint(bottomLeft), camera.ScreenToWorldPoint(topLeft), color, 2f);
-    }
+    
 }

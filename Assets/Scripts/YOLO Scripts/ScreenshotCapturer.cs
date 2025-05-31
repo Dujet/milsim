@@ -10,8 +10,8 @@ public class ScreenshotCapturer : MonoBehaviour
     public int imageHeight = 640;
     private RenderTexture renderTexture;
     public int frameCount = 0;
-
     private string imagesDir;
+    [SerializeField] DatasetGenerator datasetGenerator;
 
     // Start is called before the first frame update
     void Start()
@@ -25,9 +25,13 @@ public class ScreenshotCapturer : MonoBehaviour
             Directory.CreateDirectory(imagesDir);
             Debug.Log($"Created directory: {imagesDir}");
         }
+
+        DatasetGenerator datasetGenerator = GetComponent<DatasetGenerator>();
+        frameCount = datasetGenerator != null ? datasetGenerator.Index : frameCount;
     }
 
-    IEnumerator CaptureRoutine() {
+    IEnumerator CaptureRoutine()
+    {
         yield return new WaitForEndOfFrame(); // Wait for all rendering to complete
         Texture2D screenshot = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGB24, false);
         RenderTexture.active = renderTexture;
@@ -44,7 +48,13 @@ public class ScreenshotCapturer : MonoBehaviour
         frameCount++;
     }
 
-    public void CaptureImage() {
+    public void CaptureImage()
+    {
         StartCoroutine(CaptureRoutine());
+    }
+
+    void OnValidate()
+    {
+        frameCount = datasetGenerator != null ? datasetGenerator.Index : frameCount; 
     }
 }

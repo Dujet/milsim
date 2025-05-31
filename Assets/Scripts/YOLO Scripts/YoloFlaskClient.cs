@@ -27,10 +27,13 @@ public class YoloFlaskClient : MonoBehaviour
     public int imageHeight = 640;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private HUDMarkerController hudMarkerController;
+    [SerializeField] private float detectionInterval = 1f;
 
     void Start()
     {
         if (layerMask == 0) Debug.LogWarning("LayerMask is not set.");
+
+        StartCoroutine(StartDetectionCoroutine(detectionInterval));
     }
 
     void Update()
@@ -38,6 +41,15 @@ public class YoloFlaskClient : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             StartCoroutine(CaptureAndSendFrame());
+        }
+    }
+
+    IEnumerator StartDetectionCoroutine(float interval)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(interval);
+            yield return CaptureAndSendFrame();
         }
     }
 

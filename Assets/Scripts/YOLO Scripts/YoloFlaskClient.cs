@@ -26,6 +26,7 @@ public class YoloFlaskClient : MonoBehaviour
     public int imageWidth = 640;
     public int imageHeight = 640;
     [SerializeField] private LayerMask layerMask;
+    [SerializeField] private HUDMarkerController hudMarkerController;
 
     void Start()
     {
@@ -123,9 +124,11 @@ public class YoloFlaskClient : MonoBehaviour
         {
             case 0:
                 Debug.Log($"Raycast hit object of class 0: {detectedObject.name}");
+                hudMarkerController.AddTargetMarker(detectedObject, Color.red);
                 break;
             case 1:
                 Debug.Log($"Raycast hit object of class 1: {detectedObject.name}");
+                hudMarkerController.AddTargetMarker(detectedObject, Color.gray);
                 break;
             default:
                 Debug.Log($"Raycast hit object of unknown class {classId}: {detectedObject.name}");

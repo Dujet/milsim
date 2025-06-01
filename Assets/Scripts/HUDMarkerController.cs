@@ -76,4 +76,17 @@ public class HUDMarkerController : MonoBehaviour
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(target.position);
         marker.transform.position = screenPosition;
     }
+
+    public void SetMarkerColor(Transform target, Color color)
+    {
+        if (_targetMarkers.ContainsKey(target))
+        {
+            _targetMarkers[target].GetComponent<RawImage>().color = color;
+        }
+        else
+        {
+            Debug.LogWarning($"No marker found for target {target.name}. Cannot set color.");
+        }
+
+    }
 }

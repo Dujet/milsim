@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 3126.6516, g: 2127.3943, b: 1706.8401, a: 1}
+  m_IndirectSpecularColor: {r: 2866.1472, g: 1805.7078, b: 1192.0865, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -385,6 +385,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8295729828358812494, guid: 65844d6a2a762df4e92e9a310fe888e0, type: 3}
   m_PrefabInstance: {fileID: 143681800}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &525420140 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1149498622665068555, guid: 65844d6a2a762df4e92e9a310fe888e0, type: 3}
+  m_PrefabInstance: {fileID: 143681800}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525420139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68de4e33bdea2144d9eeebd5473bf0ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &525420146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -399,7 +410,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetSelector: {fileID: 1699257927}
   mainCamera: {fileID: 1699257924}
+  droneCamera: {fileID: 525420140}
   speed: 20
+  slerpSpeed: 5
   offset: {x: 0, y: 10, z: 0}
 --- !u!1 &547976175
 GameObject:

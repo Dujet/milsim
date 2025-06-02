@@ -15,13 +15,17 @@ public class DroneCamera : MonoBehaviour
     [SerializeField] private float _rotSpeed = 2f;
     private RectTransform _droneRotationMarker;
     private float _cameraDroneAngle;
+    private bool lookingEnabled = true;
 
-    void Awake() {
-        if (_cam == null) {
+    void Awake()
+    {
+        if (_cam == null)
+        {
             _cam = GetComponentInChildren<Camera>();
         }
 
-        if (_droneRotationMarker == null) {
+        if (_droneRotationMarker == null)
+        {
             _droneRotationMarker = GameObject.FindGameObjectWithTag("RotationMarker").GetComponent<RectTransform>();
         }
     }
@@ -35,16 +39,20 @@ public class DroneCamera : MonoBehaviour
         rotY = _cameraAttachmentPoint.transform.rotation.eulerAngles.y;
     }
 
-    void LateUpdate() {
+    void LateUpdate()
+    {
         _cam.transform.position = _cameraAttachmentPoint.position;
-        
-        rotX += Input.GetAxis("Mouse X") * _rotSpeed * _cam.fieldOfView / 60;
-        rotY += Input.GetAxis ("Mouse Y") * _rotSpeed * _cam.fieldOfView / 60;
 
-        rotY = Mathf.Clamp(rotY, -90f, 90f);      
+        if (lookingEnabled)
+        {
+            rotX += Input.GetAxis("Mouse X") * _rotSpeed * _cam.fieldOfView / 60;
+            rotY += Input.GetAxis("Mouse Y") * _rotSpeed * _cam.fieldOfView / 60;
 
-        //Camera rotation only allowed if game us not paused
-        _cam.transform.rotation = Quaternion.Euler(-rotY, rotX, 0f);
+            rotY = Mathf.Clamp(rotY, -90f, 90f);
+
+            //Camera rotation only allowed if game us not paused
+            _cam.transform.rotation = Quaternion.Euler(-rotY, rotX, 0f);
+        }
 
         // zoom in/out with mouse wheel
         // TODO: make zooming in/out logarithmic
@@ -63,14 +71,34 @@ public class DroneCamera : MonoBehaviour
         _droneRotationMarker.localEulerAngles = new Vector3(0, 0, _cameraDroneAngle);
     }
 
-    public void OnDisable() {
+    public void OnDisable()
+    {
         if (_cam == null) return;
         _cam.enabled = false;
         _cam.GetComponent<AudioListener>().enabled = false;
     }
 
-    public void OnEnable() {
+    public void OnEnable()
+    {
         _cam.enabled = true;
         _cam.GetComponent<AudioListener>().enabled = true;
+    }
+
+    public void EnableLooking()
+    {
+        lookingEnabled = true;
+    }
+
+    public void DisableLooking()
+    {
+        lookingEnabled = false;
+    }
+
+    public void EnableLooking(Quaternion rotation)
+    {
+        lookingEnabled = true;
+        _cam.transform.rotation = rotation;
+        rotX = rotation.eulerAngles.y;
+        rotY = -rotation.eulerAngles.x;
     }
 }

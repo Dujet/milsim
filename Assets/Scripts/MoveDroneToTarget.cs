@@ -6,7 +6,9 @@ public class MoveDroneToTarget : MonoBehaviour
 {
     [SerializeField] private TargetSelector targetSelector;
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private DroneCamera droneCamera;
     [SerializeField] float speed = 10f;
+    [SerializeField] private float slerpSpeed = 2f;
     [SerializeField] private Vector3 offset = new Vector3(0, 10, 0);
     private bool moving = false;
 
@@ -34,14 +36,22 @@ public class MoveDroneToTarget : MonoBehaviour
     private IEnumerator MoveDroneToPosition(Vector3 targetPosition)
     {
         moving = true;
+        droneCamera.DisableLooking();
 
         while (Vector3.Distance(transform.position, targetPosition) > 0.5f)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-            mainCamera.transform.LookAt(targetPosition);
+
+            Vector3 lookTarget = targetPosition - offset;
+            Vector3 direction = (lookTarget - transform.position).normalized;
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, targetRotation, slerpSpeed * Time.deltaTime);
+
+
             yield return null;
         }
 
         moving = false;
+        droneCamera.EnableLooking(mainCamera.transform.rotation);
     }
 }

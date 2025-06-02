@@ -29,6 +29,7 @@ public class YoloFlaskClient : MonoBehaviour
     [SerializeField] private HUDMarkerController hudMarkerController;
     [SerializeField] private float detectionInterval = 1f;
     [SerializeField] private TargetSelector targetSelector;
+    [SerializeField] private float maxDistance = 200f;
 
     void Start()
     {
@@ -117,8 +118,8 @@ public class YoloFlaskClient : MonoBehaviour
     {
         Vector3 screenPoint = new Vector3(bbox.center.x, bbox.center.y, 0f);
         Ray ray = displayCamera.ScreenPointToRay(screenPoint);
-        Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 2f);
-        if (Physics.Raycast(ray, out RaycastHit hit, layerMask))
+        Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.red, 2f);
+        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance, layerMask))
         {
             HandleDetectedObject(hit.transform.root, classId);
             Debug.DrawLine(ray.origin, hit.point, Color.green, 2f);

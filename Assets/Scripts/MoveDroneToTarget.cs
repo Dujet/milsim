@@ -6,7 +6,8 @@ public class MoveDroneToTarget : MonoBehaviour
 {
     [SerializeField] private TargetSelector targetSelector;
     [SerializeField] private Camera mainCamera;
-    float speed = 10f;
+    [SerializeField] float speed = 10f;
+    [SerializeField] private Vector3 offset = new Vector3(0, 10, 0);
     private bool moving = false;
 
 
@@ -21,7 +22,7 @@ public class MoveDroneToTarget : MonoBehaviour
 
         if (targetSelector.selectedTarget != null)
         {
-            Vector3 targetPosition = targetSelector.selectedTarget.position;
+            Vector3 targetPosition = targetSelector.selectedTarget.position + offset;
             StartCoroutine(MoveDroneToPosition(targetPosition));
         }
         else

@@ -63,9 +63,12 @@ public static class BBoxUtils
         y1Inverted += yOffset;
         y2Inverted += yOffset;
 
-        float width = x2 - x1;
-        float height = y2Inverted - y1Inverted;
-        return new Rect(x1, y1Inverted, width, height);
+        float x = Mathf.Min(x1, x2);
+        float y = Mathf.Min(y1Inverted, y2Inverted);
+        float width = Mathf.Abs(x2 - x1);
+        float height = Mathf.Abs(y2Inverted - y1Inverted);
+
+        return new Rect(x, y, width, height);
     }
 
     public static void DrawBoundingBox(Rect bbox, Color color, Camera camera)

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 2993.1174, g: 1887.3625, b: 1250.4357, a: 1}
+  m_IndirectSpecularColor: {r: 2997.5452, g: 1879.8782, b: 1234.7462, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1532,6 +1532,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   host: 127.0.0.1
   port: 8087
+  reconnectDelay: 5
 --- !u!114 &1808616625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1546,7 +1547,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cotReceiver: {fileID: 1808616626}
   markerPrefab: {fileID: 6906664617923262597, guid: 5c593526b7e6b524a8ddbaf130c28202, type: 3}
-  allowedKinds: 050000000600000007000000
+  allowedKinds: 05000000060000000700000001000000020000000300000004000000
 --- !u!114 &1808616626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1564,7 +1565,7 @@ MonoBehaviour:
   reconnectDelay: 5
   ignoredUidPrefixes:
   - unity-
-  filterToOperatorMarkers: 1
+  filterToOperatorMarkers: 0
 --- !u!114 &1808616627
 MonoBehaviour:
   m_ObjectHideFlags: 0

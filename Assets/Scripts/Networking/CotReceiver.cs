@@ -134,7 +134,8 @@ public static class CotKindHelper
         t != null &&
         (t.StartsWith("b-m-") ||   // map markers / waypoints
          t.StartsWith("b-a-") ||   // emergency markers
-         t.StartsWith("u-d-"));     // drawn shapes / geofences
+         t.StartsWith("u-d-") ||     // drawn shapes / geofences
+         t.StartsWith("a-")); 
 }
 
 

@@ -85,7 +85,7 @@ public class CotTcpSender : MonoBehaviour
             byte[] data = Encoding.UTF8.GetBytes(xml + "\n");
             _stream.Write(data, 0, data.Length);
             _stream.Flush();
-            Debug.Log("[CotTcpSender] Sent:\n" + xml);
+            //Debug.Log("[CotTcpSender] Sent:\n" + xml);
         }
         catch (Exception ex)
         {

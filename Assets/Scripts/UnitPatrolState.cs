@@ -14,7 +14,7 @@ public class UnitPatrolState : IUnitState
 
     public void Enter()
     {
-        Debug.Log($"{aiStateManager.gameObject.name}:Entering Patrol State");
+        //Debug.Log($"{aiStateManager.gameObject.name}:Entering Patrol State");
         aiStateManager.agent.autoBraking = false;
     }
 
@@ -24,7 +24,7 @@ public class UnitPatrolState : IUnitState
 
         if (!aiStateManager.IsFollower){
             if (aiStateManager.moveOrderGenerator.generateMoveOrders()){
-                Debug.Log($"Patrol State: {aiStateManager.gameObject.name} generating new path");
+                //Debug.Log($"Patrol State: {aiStateManager.gameObject.name} generating new path");
             }
         }
 
@@ -39,14 +39,14 @@ public class UnitPatrolState : IUnitState
 
     public void Exit()
     {
-        Debug.Log($"{aiStateManager.gameObject.name}:Exiting Patrol State");
+        //Debug.Log($"{aiStateManager.gameObject.name}:Exiting Patrol State");
         aiStateManager.agent.autoBraking = true;
     }
 
     public void AlertSquadMembers(Transform target) {
         if (target == null) return;
         List<AIStateManager> squadMembers = aiStateManager.GetSquadMembers();
-        Debug.Log($"{aiStateManager.gameObject.name}:Alerting {squadMembers.Count} squad members!");
+        //Debug.Log($"{aiStateManager.gameObject.name}:Alerting {squadMembers.Count} squad members!");
         foreach (AIStateManager member in squadMembers) {
             if (member?.CurrentState is UnitPatrolState)
                 member.ChangeState(new UnitChaseState(member, target));

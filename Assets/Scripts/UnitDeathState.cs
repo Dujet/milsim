@@ -13,7 +13,7 @@ public class UnitDeathState : IUnitState
     // TODO: test if squad leader change works
     public void Enter()
     {
-        Debug.Log($"{aiStateManager.gameObject.name}:Bro died");
+        //Debug.Log($"{aiStateManager.gameObject.name}:Bro died");
         aiStateManager.agent.ResetPath();
         //aiStateManager.agent.enabled = false;
         aiStateManager.fov.enabled = false;

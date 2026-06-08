@@ -18,7 +18,7 @@ public class UnitAttackState : IUnitState
     
     public void Enter()
     {
-        Debug.Log($"{aiStateManager.gameObject.name}:Entering Attack State");
+        //Debug.Log($"{aiStateManager.gameObject.name}:Entering Attack State");
         aiStateManager.agent.ResetPath();
         targetHealth = target.GetComponent<Health>();
     }
@@ -55,7 +55,7 @@ public class UnitAttackState : IUnitState
         bool fired = aiStateManager.Weapon.CanAttack(target);
         aiStateManager.Weapon.Fire(target);
         if (fired) {
-            Debug.Log($"{aiStateManager.gameObject.name}:Attacking {target.gameObject.name}");
+            //Debug.Log($"{aiStateManager.gameObject.name}:Attacking {target.gameObject.name}");
         }
 
         // If the target is still alive, return
@@ -70,7 +70,7 @@ public class UnitAttackState : IUnitState
 
     public void Exit()
     {
-        Debug.Log($"{aiStateManager.gameObject.name}:Exiting Attack State");
+        //Debug.Log($"{aiStateManager.gameObject.name}:Exiting Attack State");
         aiStateManager.Weapon.StopAttack();
     }
 
@@ -85,7 +85,7 @@ public class UnitAttackState : IUnitState
 
         target = newTarget;
         targetHealth = newTargetHealth;
-        Debug.Log($"{aiStateManager.gameObject.name}:Target changed to {target.gameObject.name}");
+        //Debug.Log($"{aiStateManager.gameObject.name}:Target changed to {target.gameObject.name}");
         return true;
     }
 }

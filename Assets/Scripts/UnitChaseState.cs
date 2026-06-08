@@ -13,7 +13,7 @@ public class UnitChaseState : IUnitState
     }
     public void Enter()
     {
-        Debug.Log($"{aiStateManager.gameObject.name}:Entering Chase State");
+        //Debug.Log($"{aiStateManager.gameObject.name}:Entering Chase State");
         if (target == null) {
             aiStateManager.ChangeState(new UnitPatrolState(aiStateManager));
             Debug.Log($"{aiStateManager.gameObject.name}:Chase target is null");
@@ -45,7 +45,7 @@ public class UnitChaseState : IUnitState
 
     public void Exit()
     {
-        Debug.Log($"{aiStateManager.gameObject.name}:Exiting Chase State");
+        //Debug.Log($"{aiStateManager.gameObject.name}:Exiting Chase State");
     }
 
     public Transform GetTarget() {

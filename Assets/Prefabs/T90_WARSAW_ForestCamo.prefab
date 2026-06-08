@@ -167,6 +167,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1498083748156456, guid: b5d023135bcb7f348bcb343326045412, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8331296250168860278}
+    - targetCorrespondingSourceObject: {fileID: 1498083748156456, guid: b5d023135bcb7f348bcb343326045412, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -5120811225555293212}
     - targetCorrespondingSourceObject: {fileID: 1914462181120338, guid: b5d023135bcb7f348bcb343326045412, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5709048933435079362}
@@ -327,3 +330,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _deathEffect: {fileID: 100002, guid: 977bc30ff641de44bbf012f86491b775, type: 3}
   _deathEffectSpawnPoint: {fileID: 6680166490844323323}
+--- !u!114 &-5120811225555293212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250530863642560811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bc93addd4eeb154fa24b32df9d3ec36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faction: 1
+  unitIndex: 1

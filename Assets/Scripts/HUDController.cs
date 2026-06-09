@@ -9,7 +9,7 @@ using System;
 
 public class HUDController : MonoBehaviour
 {
-    [SerializeField] private GameObject _canvas;
+    [SerializeField] public GameObject Canvas;
     [SerializeField] private GameObject _targetMarkerPrefab;
     [SerializeField] private FieldOfView _fieldOfView;
     private Dictionary<Transform, GameObject> _targetMarkers = new Dictionary<Transform, GameObject>();
@@ -19,6 +19,11 @@ public class HUDController : MonoBehaviour
 
     void Awake() {
         Cursor.lockState = CursorLockMode.Locked;
+        if (Instance != null && Instance != this) {
+            Destroy(this);
+        } else {
+            Instance = this;
+        }
     }
     
     // Start is called before the first frame update
@@ -27,13 +32,20 @@ public class HUDController : MonoBehaviour
         _fieldOfView.OnVisibleTargetsChanged += UpdateTargetMarkers;
         _friendlyMarkers = GameObject.FindGameObjectsWithTag("NATO").Select(go => go.transform).ToDictionary(go => go, 
             go => {
-            GameObject marker = Instantiate(_targetMarkerPrefab, _canvas.transform);
+            GameObject marker = Instantiate(_targetMarkerPrefab, Canvas.transform);
             marker.GetComponent<RawImage>().color = Color.green;
             return marker;
             });
 
+        if (Canvas == null)
+        {
+            Canvas = GetComponent<Canvas>().gameObject;
+        }
+
         UpdateTargetMarkers();
     }
+
+    public static HUDController Instance { get; private set; }
 
     void OnDestroy() {
         _fieldOfView.OnVisibleTargetsChanged -= UpdateTargetMarkers;
@@ -74,7 +86,7 @@ public class HUDController : MonoBehaviour
 
         foreach (var target in _fieldOfView.visibleTargets) {
             if (target == null) continue;
-            GameObject targetMarker = Instantiate(_targetMarkerPrefab, _canvas.transform);
+            GameObject targetMarker = Instantiate(_targetMarkerPrefab, Canvas.transform);
             DisableIfBehindCamera(target, targetMarker);
 
             if (target == _selectedTarget) {
@@ -87,7 +99,7 @@ public class HUDController : MonoBehaviour
         }
 
         if (_selectedTarget != null && !_targetMarkers.ContainsKey(_selectedTarget) && !_selectedTarget.GetComponent<Health>().IsDead) {
-            GameObject targetMarker = Instantiate(_targetMarkerPrefab, _canvas.transform);
+            GameObject targetMarker = Instantiate(_targetMarkerPrefab, Canvas.transform);
             DisableIfBehindCamera(_selectedTarget, targetMarker);
             targetMarker.GetComponent<RawImage>().color = Color.red;
             targetMarker.transform.position = Camera.main.WorldToScreenPoint(_selectedTarget.position);

@@ -73,6 +73,7 @@ public class CotMarkerSpawner : MonoBehaviour
         }
 
         Vector3 worldPos = CoordinateConverter.Wgs84ToUnity(evt.Lat, evt.Lon, evt.HaeMeters);
+        if (worldPos.y >= 9999f) worldPos.y = 100f; // Spawn at a fixed height when altitude is unavailable;
 
         GameObject marker = Instantiate(markerPrefab, worldPos, Quaternion.identity);
         marker.name = $"CotMarker_{evt.Callsign}_{evt.Uid}";
@@ -82,6 +83,9 @@ public class CotMarkerSpawner : MonoBehaviour
         //   var tag = marker.GetComponent<CotMarkerTag>();
         //   if (tag != null) tag.Populate(evt);
         //
+        var tag = marker.GetComponent<CotMarkerTag>();
+        tag.Populate(evt);
+
         // Or drive a label:
         //   marker.GetComponentInChildren<TextMesh>().text = evt.Callsign;
         // ────────────────────────────────────────────────────────────────
@@ -111,6 +115,7 @@ public class CotMarkerSpawner : MonoBehaviour
         }
 
         marker.transform.position = CoordinateConverter.Wgs84ToUnity(evt.Lat, evt.Lon, evt.HaeMeters);
+        if (marker.transform.position.y >= 9999f) marker.transform.position = new Vector3(marker.transform.position.x, 100f, marker.transform.position.z);
 
         Debug.Log($"[CotMarkerSpawner] Moved marker '{evt.Callsign}' to " +
                   $"{marker.transform.position}");

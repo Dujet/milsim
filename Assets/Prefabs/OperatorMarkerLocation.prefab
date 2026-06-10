@@ -44,4 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c011f493ebbf464ca6f0f528318a117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  markerAtlas: {fileID: 100100200, guid: f13c96e4a40488345936b4d8619e5f04, type: 3}
+  _friendlyMarkerPrefab: {fileID: 7397101451872268925, guid: ae8a84d7cfd67934dad213b7bf16b273, type: 3}
+  _hostileMarkerPrefab: {fileID: 4682245682361975175, guid: b6a9a3c67c71e094ab5e3d9d3d27dd9a, type: 3}
+  _neutralMarkerPrefab: {fileID: 2340951333875358573, guid: eff3106c524a26d47b86ac75705f3316, type: 3}
+  _unknownMarkerPrefab: {fileID: 4087020785039347194, guid: 87675d615a8aadf4292b188e77c2bfb5, type: 3}

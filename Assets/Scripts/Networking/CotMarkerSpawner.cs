@@ -73,7 +73,7 @@ public class CotMarkerSpawner : MonoBehaviour
         }
 
         Vector3 worldPos = CoordinateConverter.Wgs84ToUnity(evt.Lat, evt.Lon, evt.HaeMeters);
-        if (worldPos.y >= 9999f) worldPos.y = 100f; // Spawn at a fixed height when altitude is unavailable;
+        worldPos = SnapToGround(worldPos);
 
         GameObject marker = Instantiate(markerPrefab, worldPos, Quaternion.identity);
         marker.name = $"CotMarker_{evt.Callsign}_{evt.Uid}";
@@ -114,8 +114,7 @@ public class CotMarkerSpawner : MonoBehaviour
             return;
         }
 
-        marker.transform.position = CoordinateConverter.Wgs84ToUnity(evt.Lat, evt.Lon, evt.HaeMeters);
-        if (marker.transform.position.y >= 9999f) marker.transform.position = new Vector3(marker.transform.position.x, 100f, marker.transform.position.z);
+        marker.transform.position = SnapToGround(CoordinateConverter.Wgs84ToUnity(evt.Lat, evt.Lon, evt.HaeMeters));
 
         Debug.Log($"[CotMarkerSpawner] Moved marker '{evt.Callsign}' to " +
                   $"{marker.transform.position}");
@@ -147,5 +146,13 @@ public class CotMarkerSpawner : MonoBehaviour
         foreach (CotKind k in allowedKinds)
             if (k == kind) return true;
         return false;
+    }
+
+    private Vector3 SnapToGround(Vector3 pos)
+    {
+        Ray ray = new Ray(pos + Vector3.up * 1000f, Vector3.down);
+        if (Physics.Raycast(ray, out RaycastHit hit, 2000f))
+            return hit.point;
+        return pos; // Fallback to original position if no ground found
     }
 }

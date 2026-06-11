@@ -28,8 +28,13 @@ public class CotMarkerTag : MonoBehaviour
 
         // Update HUD marker position based on the world position of the Cot marker
         float distance = Vector3.Distance(Camera.main.transform.position, transform.position);
-        Vector3 adjustedPos = transform.position + (Vector3.up * (float)Math.Min(distance*0.2, 50));
+        Vector3 adjustedPos = transform.position + (Vector3.up * (float)Math.Min(distance * 0.2, 50));
         Vector3 screenPos = Camera.main.WorldToScreenPoint(adjustedPos);
+
+        float clampedX = Mathf.Clamp(screenPos.x, 40, Screen.width - 40);
+        float clampedY = Mathf.Clamp(screenPos.y, 40, Screen.height - 40);
+        screenPos = new Vector3(clampedX, clampedY, screenPos.z);
+
         _hudMarker.transform.position = screenPos;
         // Optionally, update distance text if the marker has a callsign
         if (_markerDistance != null)
@@ -47,14 +52,14 @@ public class CotMarkerTag : MonoBehaviour
             _hudMarker.SetActive(true);
         }
     }
-    
+
     public void Populate(CotInboundEvent evt)
     {
         _kind = evt.Kind;
         _callsign = evt.Callsign;
 
         //Debug.Log($"[CotMarkerTag] Populating marker tag for '{_callsign}' of kind '{_kind}'");
-        
+
         if (_hudMarker == null)
         {
             SpawnHUDMarker(_callsign);
@@ -88,7 +93,7 @@ public class CotMarkerTag : MonoBehaviour
                 break;
         }
 
-        
+
         var allTexts = _hudMarker.GetComponentsInChildren<TextMeshProUGUI>();
         _markerCallsign = allTexts.FirstOrDefault(t => t.gameObject.name.Contains("Callsign"));
         _markerDistance = allTexts.FirstOrDefault(t => t.gameObject.name.Contains("Distance"));

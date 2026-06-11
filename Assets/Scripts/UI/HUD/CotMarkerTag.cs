@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,17 +22,18 @@ public class CotMarkerTag : MonoBehaviour
     private TextMeshProUGUI _markerCallsign;
     private TextMeshProUGUI _markerDistance;
 
-    void Update()
+    void Update() // TODO: make the marker HUD element stick to screen edges if the marker is off-screen 
     {
         if (_hudMarker == null) return;
 
         // Update HUD marker position based on the world position of the Cot marker
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
+        float distance = Vector3.Distance(Camera.main.transform.position, transform.position);
+        Vector3 adjustedPos = transform.position + (Vector3.up * (float)Math.Min(distance*0.2, 50));
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(adjustedPos);
         _hudMarker.transform.position = screenPos;
         // Optionally, update distance text if the marker has a callsign
         if (_markerDistance != null)
         {
-            float distance = Vector3.Distance(Camera.main.transform.position, transform.position);
             _markerDistance.text = $"{distance:F0} m";
         }
 

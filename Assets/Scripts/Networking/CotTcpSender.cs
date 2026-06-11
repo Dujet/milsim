@@ -10,6 +10,7 @@ public class CotTcpSender : MonoBehaviour
 
     public float reconnectDelay = 5f;
     private bool _reconnectPending = false;
+    public bool disableReconnect = false; // for testing
 
     private TcpClient _client;
     private NetworkStream _stream;
@@ -40,6 +41,8 @@ public class CotTcpSender : MonoBehaviour
     {
         if (_reconnectPending) return;
         _reconnectPending = true;
+
+        if (disableReconnect) return;
         Invoke(nameof(Connect), reconnectDelay);
     }
 
@@ -75,6 +78,7 @@ public class CotTcpSender : MonoBehaviour
     {
         if (!IsConnected())
         {
+            if (_reconnectPending) return;
             Debug.LogWarning("[CotTcpSender] Not connected — discarding message and scheduling reconnect.");
             ScheduleReconnect();
             return;

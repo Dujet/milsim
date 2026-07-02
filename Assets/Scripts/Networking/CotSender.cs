@@ -14,7 +14,9 @@ public class CotSender : MonoBehaviour
     public float staleOffsetSeconds = 30f;
     public CotTcpSender tcpSender;
 
+    [SerializeField] private FieldOfView _fieldOfView;
 
+    //TODO: broadcast hostile entities only if they are visible by the drone
     private List<CotEntity> _entities = new();
 
     // Start is called before the first frame update
@@ -22,6 +24,16 @@ public class CotSender : MonoBehaviour
     {
         StartCoroutine(BroadcastLoop());
         //StartCoroutine(TestPayload());
+
+        if (_fieldOfView == null)
+        {
+            Debug.LogWarning("[CotSender] FieldOfView reference is null. Attempting to find one in the scene.");
+            _fieldOfView = FindObjectOfType<FieldOfView>();
+            if (_fieldOfView == null)
+            {
+                Debug.LogError("[CotSender] No FieldOfView component found in the scene. Visible target tracking will not work.");
+            }
+        }
     }
 
     private IEnumerator TestPayload()
@@ -59,12 +71,19 @@ public class CotSender : MonoBehaviour
             yield return new WaitForSeconds(broadcastIntervalSeconds);
 
             var snapshot = new List<CotEntity>(_entities);
+            var visibleTargets = _fieldOfView.GetVisibleTargetSet();
             //snapshot.RemoveRange(1, 11); // debug for single tank testing
             foreach (CotEntity entity in snapshot)
             {
                 if (entity.transform == null)
                 {
                     Debug.LogWarning($"[CotSender] Entity '{entity.callsign}' has a null transform — skipping.");
+                    continue;
+                }
+
+                if (!entity.cotType.StartsWith("a-f") && !visibleTargets.Contains(entity.transform))
+                {
+                    //Debug.Log($"[CotSender] Skipping non-friendly entity '{entity.callsign}' because it is not visible.");
                     continue;
                 }
 

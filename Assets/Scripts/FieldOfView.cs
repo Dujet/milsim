@@ -27,12 +27,18 @@ public class FieldOfView : MonoBehaviour
         StopCoroutine(FindTargetsWithDelay(1f / scanFrequency));
     }
 
+    public 
+
     IEnumerator FindTargetsWithDelay(float delay) {
         while (true) {
             yield return new WaitForSeconds(delay);
             FindVisibleTargets();
             //FilterFriendlyTargets();
         }
+    }
+
+    public HashSet<Transform> GetVisibleTargetSet() {
+        return new HashSet<Transform>(visibleTargets);
     }
 
     private void FindVisibleTargets() {

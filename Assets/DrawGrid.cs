@@ -6,8 +6,8 @@ public class DrawGrid : MonoBehaviour
 {
     [SerializeField] private Grid grid;
     [SerializeField] private Transform target;
-    private int cellCountX = 10;
-    private int cellCountZ = 10;
+    [SerializeField] private int cellCountX = 10;
+    [SerializeField] private int cellCountZ = 10;
 
 
     void OnDrawGizmos() {

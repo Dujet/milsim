@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8398795057882010235
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5038755716098813733}
+  - component: {fileID: 1737041338106589782}
+  - component: {fileID: 7047159761546715564}
+  - component: {fileID: 8583445893390830503}
+  - component: {fileID: 2684746715382878636}
+  m_Layer: 0
+  m_Name: CotManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5038755716098813733
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8398795057882010235}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 574.2053, y: 60.430218, z: 926.86084}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1737041338106589782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8398795057882010235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 727db613835290445b6f8c3a42bc9227, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ftsBroadcastUrl: http://127.0.0.1:8087
+  broadcastIntervalSeconds: 1
+  staleOffsetSeconds: 30
+  tcpSender: {fileID: 7047159761546715564}
+  _fieldOfView: {fileID: 0}
+--- !u!114 &7047159761546715564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8398795057882010235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6c7e14907d0de849ba20e5c4520d396, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  host: 127.0.0.1
+  port: 8087
+  reconnectDelay: 5
+  disableReconnect: 1
+--- !u!114 &8583445893390830503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8398795057882010235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 537f06029aa2ac449a0d8b0c0d0a7ea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  host: 127.0.0.1
+  port: 8087
+  reconnectDelay: 5
+  ignoredUidPrefixes:
+  - unity-
+  filterToOperatorMarkers: 0
+--- !u!114 &2684746715382878636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8398795057882010235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08478e9d8e9dde3488c800d9fa50c698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cotReceiver: {fileID: 8583445893390830503}
+  markerPrefab: {fileID: 1738196327294023522, guid: ce436de2c5a7ee241814521cf0cda278, type: 3}
+  allowedKinds: 05000000060000000700000001000000020000000300000004000000

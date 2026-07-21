@@ -45,12 +45,12 @@ public class CotSender : MonoBehaviour
 
 
             CotEntity ent = _entities[0];
-            Vector3 coords = CoordinateConverter.UnityToWgs84(ent.transform.position);
+            Wgs84Coordinate coords = CoordinateConverter.UnityToWgs84Double(ent.transform.position);
             string xml = BuildCotXml(
                 ent.uid,
                 ent.cotType,
                 ent.callsign,
-                coords.x, coords.y, coords.z,
+                coords.Latitude, coords.Longitude, coords.HaeMeters,
                 ent.remarks
             );
 
@@ -87,13 +87,13 @@ public class CotSender : MonoBehaviour
                     continue;
                 }
 
-                Vector3 coords = CoordinateConverter.UnityToWgs84(entity.transform.position);
+                Wgs84Coordinate coords = CoordinateConverter.UnityToWgs84Double(entity.transform.position);
 
                 string xml = BuildCotXml(
                     entity.uid,
                     entity.cotType,
                     entity.callsign,
-                    coords.x, coords.y, coords.z,
+                    coords.Latitude, coords.Longitude, coords.HaeMeters,
                     entity.remarks
                 );
 

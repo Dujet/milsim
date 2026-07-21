@@ -67,7 +67,7 @@ MonoBehaviour:
   host: 127.0.0.1
   port: 8087
   reconnectDelay: 5
-  disableReconnect: 1
+  disableReconnect: 0
 --- !u!114 &8583445893390830503
 MonoBehaviour:
   m_ObjectHideFlags: 0

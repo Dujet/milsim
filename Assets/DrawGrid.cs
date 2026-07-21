@@ -8,9 +8,11 @@ public class DrawGrid : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private int cellCountX = 10;
     [SerializeField] private int cellCountZ = 10;
+    public bool drawGrid = true;
 
 
     void OnDrawGizmos() {
+        if (!drawGrid || grid == null) return;
         Gizmos.color = Color.red;
         for (int x = 0; x < cellCountX; x++) {
             for (int z = 0; z < cellCountZ; z++) {

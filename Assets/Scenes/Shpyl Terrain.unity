@@ -5298,35 +5298,6 @@ MonoBehaviour:
   latitude: 51.224860797942185
   longitude: 34.47078153782468
   haeMeters: 0
---- !u!1 &1162651793 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8398795057882010235, guid: 2b579a9e5b3f58b4cbe8e63dbfaca1a0, type: 3}
-  m_PrefabInstance: {fileID: 1217755430}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1162651795 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8583445893390830503, guid: 2b579a9e5b3f58b4cbe8e63dbfaca1a0, type: 3}
-  m_PrefabInstance: {fileID: 1217755430}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1162651793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 537f06029aa2ac449a0d8b0c0d0a7ea5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1162651799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1162651793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b915f1b2620ff1344b73b972758e9ead, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cotReceiver: {fileID: 1162651795}
 --- !u!1 &1214676337
 GameObject:
   m_ObjectHideFlags: 0
@@ -8036,6 +8007,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1737041338106589782, guid: 2b579a9e5b3f58b4cbe8e63dbfaca1a0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1737041338106589782, guid: 2b579a9e5b3f58b4cbe8e63dbfaca1a0, type: 3}
       propertyPath: _fieldOfView
       value: 
       objectReference: {fileID: 1878863024}
@@ -8079,18 +8054,71 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7047159761546715564, guid: 2b579a9e5b3f58b4cbe8e63dbfaca1a0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8398795057882010235, guid: 2b579a9e5b3f58b4cbe8e63dbfaca1a0, type: 3}
       propertyPath: m_Name
       value: CotManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8583445893390830503, guid: 2b579a9e5b3f58b4cbe8e63dbfaca1a0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8398795057882010235, guid: 2b579a9e5b3f58b4cbe8e63dbfaca1a0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1162651799}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b579a9e5b3f58b4cbe8e63dbfaca1a0, type: 3}
+--- !u!1 &1277087894
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1277087896}
+  - component: {fileID: 1277087895}
+  m_Layer: 0
+  m_Name: FrameTimeLogger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1277087895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1277087894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b523a56d75878d047a060b65e3b31d02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runLabel: bez-razmjene
+  warmupFrames: 300
+  durationSeconds: 60
+  disableVSync: 1
+--- !u!4 &1277087896
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1277087894}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1005.2521, y: 131.36972, z: 862.2958}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1277741778
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9809,3 +9837,4 @@ SceneRoots:
   - {fileID: 2122798752}
   - {fileID: 1470199061}
   - {fileID: 1277741778}
+  - {fileID: 1277087896}

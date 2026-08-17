@@ -117,19 +117,29 @@ public class CotSender : MonoBehaviour
         tcpSender.SendCot(xml);
     }
 
+    /// <summary>
+    /// Sends a CoT delete instruction for the entity identified by <paramref name="uid"/>.
+    ///
+    /// TAK clients do NOT identify the deletion target by the event's own uid.
+    /// The event carries an arbitrary uid of its own, while the item to remove is
+    /// named in detail/link/@uid and accompanied by an empty &lt;__forcedelete/&gt;
+    /// element. A &lt;point&gt; element is also required by the base schema, even
+    /// though it carries no meaning here.
+    /// </summary>
     public void SendDeleteCoT(string uid)
     {
         string time = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
 
         string xml =
-    $@"<?xml version=""1.0"" encoding=""UTF-8""?>
-        <event version=""2.0""
-            uid=""{uid}""
-            type=""t-x-d-d""
-            time=""{time}""
-            start=""{time}""
-            stale=""{time}"">
-        </event>";
+            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
+            $"<event version=\"2.0\" uid=\"{Guid.NewGuid()}\" type=\"t-x-d-d\"" +
+            $" time=\"{time}\" start=\"{time}\" stale=\"{time}\" how=\"m-g\">" +
+            "<point lat=\"0\" lon=\"0\" hae=\"0\" ce=\"9999999\" le=\"9999999\"/>" +
+            "<detail>" +
+            $"<link uid=\"{EscapeXml(uid)}\" relation=\"none\" type=\"none\"/>" +
+            "<__forcedelete/>" +
+            "</detail>" +
+            "</event>";
 
         tcpSender.SendCot(xml);
     }

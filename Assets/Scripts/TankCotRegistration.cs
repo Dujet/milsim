@@ -6,9 +6,11 @@ public class TankCotRegistration : MonoBehaviour
     [Header("Identity")]
     public Faction faction = Faction.NATO;
     public int unitIndex = 1;
+    [SerializeField] private bool isDrone = false;
  
     // CoT type strings for each faction
     private const string CotTypeFriendly = "a-f-G-U-C"; // friendly ground combat
+    private const string CotTypeFriendlyDrone = "a-f-A"; // friendly air unmanned
     private const string CotTypeHostile  = "a-h-G-U-C"; // hostile ground combat
  
     private CotSender _sender;
@@ -30,7 +32,7 @@ public class TankCotRegistration : MonoBehaviour
         CotEntity entity = new CotEntity
         {
             uid       = _uid,
-            cotType   = faction == Faction.NATO ? CotTypeFriendly : CotTypeHostile,
+            cotType   = ClassifyType(),
             callsign  = $"{(faction == Faction.NATO ? "BLUE" : "RED")}-{unitIndex:D2}",
             transform = transform,
             remarks   = $"Simulated {faction} tank (Unity)"
@@ -45,5 +47,11 @@ public class TankCotRegistration : MonoBehaviour
         // TODO: maybe add destroyed state (check civ-tak/fts docs to see if there's a way to mark an entity as destroyed)
         if (_sender != null)
             _sender.UnregisterEntity(_uid);
+    }
+
+    private string ClassifyType()
+    {
+        if (isDrone) return CotTypeFriendlyDrone;
+        else return faction == Faction.NATO ? CotTypeFriendly : CotTypeHostile;
     }
 }

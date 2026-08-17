@@ -474,24 +474,36 @@ public class CotReceiver : MonoBehaviour
 
             if (string.IsNullOrEmpty(uid)) return;
 
-            // ── UID filter ──────────────────────────────────────────────
-            foreach (string prefix in ignoredUidPrefixes)
-            {
-                if (uid.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
-                    return; // This is one of our own Unity entities echoed back
-            }
-
             // ── Delete event ────────────────────────────────────────────
+            // A delete event carries an arbitrary uid of its own; the item to
+            // remove is named in detail/link/@uid. Resolve the real target
+            // BEFORE applying the ignore-list, otherwise the filter would test
+            // the wrong identifier.
             if (cotType == "t-x-d-d")
             {
+                string targetUid = uid;
+
+                XmlElement deleteLink = ev["detail"]?["link"];
+                if (deleteLink != null)
+                {
+                    string linkedUid = deleteLink.GetAttribute("uid");
+                    if (!string.IsNullOrWhiteSpace(linkedUid))
+                        targetUid = linkedUid;
+                }
+
+                if (IsIgnoredUid(targetUid)) return;
+
                 _pending.Enqueue(new CotInboundEvent
                 {
-                    Uid = uid,
+                    Uid = targetUid,
                     CotType = cotType,
                     IsDelete = true,
                 });
                 return;
             }
+
+            // ── UID filter ──────────────────────────────────────────────
+            if (IsIgnoredUid(uid)) return; // One of our own entities echoed back
 
             // ── Location ────────────────────────────────────────────────
             XmlElement point = ev["point"];
@@ -557,6 +569,23 @@ public class CotReceiver : MonoBehaviour
     }
 
     // ── Utilities ─────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// True when the UID matches one of <see cref="ignoredUidPrefixes"/>, i.e.
+    /// when the event describes an entity this simulation published itself.
+    /// </summary>
+    private bool IsIgnoredUid(string uid)
+    {
+        if (string.IsNullOrEmpty(uid)) return false;
+
+        foreach (string prefix in ignoredUidPrefixes)
+        {
+            if (uid.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+                return true;
+        }
+
+        return false;
+    }
 
     private static double ParseDouble(string s)
     {

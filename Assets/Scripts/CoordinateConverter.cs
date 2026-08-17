@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -485,5 +486,97 @@ public sealed class CoordinateConverter : MonoBehaviour
         public static Vector3d operator -(Vector3d left, Vector3d right) => new Vector3d(left.X - right.X, left.Y - right.Y, left.Z - right.Z);
         public static Vector3d operator *(Vector3d vector, double scalar) => new Vector3d(vector.X * scalar, vector.Y * scalar, vector.Z * scalar);
         public static double Dot(Vector3d left, Vector3d right) => left.X * right.X + left.Y * right.Y + left.Z * right.Z;
+    }
+
+    [Header("Neovisna provjera točnosti")]
+    [Tooltip("Točke koje NE sudjeluju u umjeravanju; služe samo za mjerenje pogreške.")]
+    [SerializeField] private CoordinateReferencePoint[] verificationPoints;
+
+    [ContextMenu("Izmjeri točnost na provjernim točkama")]
+    public void MeasureAccuracy()
+    {
+        if (verificationPoints == null || verificationPoints.Length == 0)
+        {
+            Debug.LogWarning("[Provjera] Nema zadanih provjernih točaka.");
+            return;
+        }
+
+        GetAnchorFrame(out Vector3d anchorEcef, out Vector3d eastAxis,
+                       out Vector3d northAxis, out _);
+
+        double sumSquared = 0.0;
+        double worst = 0.0;
+        int count = 0;
+
+        foreach (CoordinateReferencePoint point in verificationPoints)
+        {
+            if (point == null) continue;
+
+            // Očekivano: očitano s karte, upisano u komponentu.
+            Vector3d expectedEcef = GeodeticToEcef(
+                point.latitude, point.longitude, anchorHaeMeters);
+
+            // Dobiveno: pretvorba položaja iz scene.
+            Wgs84Coordinate converted = UnityToWgs84Coordinate(point.transform.position);
+            Vector3d convertedEcef = GeodeticToEcef(
+                converted.Latitude, converted.Longitude, anchorHaeMeters);
+
+            Vector3d delta = convertedEcef - expectedEcef;
+            double dEast = Vector3d.Dot(delta, eastAxis);
+            double dNorth = Vector3d.Dot(delta, northAxis);
+            double error = Math.Sqrt(dEast * dEast + dNorth * dNorth);
+
+            sumSquared += error * error;
+            worst = Math.Max(worst, error);
+            count++;
+
+            Debug.Log($"[Provjera] {point.name}: {error:F2} m " +
+                      $"(istok {dEast:F2} m, sjever {dNorth:F2} m)");
+        }
+
+        if (count == 0) return;
+
+        Debug.Log($"[Provjera] Točaka: {count}, " +
+                  $"RMS {Math.Sqrt(sumSquared / count):F2} m, najveće {worst:F2} m");
+    }
+
+    [ContextMenu("Provjeri obratljivost pretvorbe")]
+    public void MeasureRoundTrip()
+    {
+        var samples = new List<Transform>();
+        if (controlPoints != null)
+            foreach (var p in controlPoints) if (p != null) samples.Add(p.transform);
+        if (verificationPoints != null)
+            foreach (var p in verificationPoints) if (p != null) samples.Add(p.transform);
+
+        if (samples.Count == 0)
+        {
+            Debug.LogWarning("[Obratljivost] Nema točaka za uzorkovanje.");
+            return;
+        }
+
+        Vector3 origin = UnityOriginPosition;
+        double sumSquared = 0.0;
+        double worst = 0.0;
+
+        foreach (Transform t in samples)
+        {
+            Wgs84Coordinate g = UnityToWgs84Coordinate(t.position);
+            Vector3 back = Wgs84ToUnityPosition(g.Latitude, g.Longitude, g.HaeMeters);
+
+            GetEastNorth(t.position.x - origin.x, t.position.z - origin.z,
+                         out double e1, out double n1);
+            GetEastNorth(back.x - origin.x, back.z - origin.z,
+                         out double e2, out double n2);
+
+            double error = Math.Sqrt((e2 - e1) * (e2 - e1) + (n2 - n1) * (n2 - n1));
+            sumSquared += error * error;
+            worst = Math.Max(worst, error);
+
+            Debug.Log($"[Obratljivost] {t.name}: pomak {error:F3} m");
+        }
+
+        Debug.Log($"[Obratljivost] Točaka: {samples.Count}, " +
+                  $"RMS {Math.Sqrt(sumSquared / samples.Count):F3} m, najveće {worst:F3} m");
     }
 }

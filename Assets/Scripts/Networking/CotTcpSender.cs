@@ -20,6 +20,18 @@ public class CotTcpSender : MonoBehaviour
         Connect();
     }
 
+    void Update()
+    {
+        if (_stream == null) return;
+        try
+        {
+            byte[] sink = new byte[4096];
+            while (_stream.DataAvailable)
+                _stream.Read(sink, 0, sink.Length); // clear out buffer
+        }
+        catch { }
+    }
+
     private void Connect()
     {
         _reconnectPending = false;

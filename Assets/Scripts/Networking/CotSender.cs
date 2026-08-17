@@ -128,17 +128,27 @@ public class CotSender : MonoBehaviour
     /// </summary>
     public void SendDeleteCoT(string uid)
     {
-        string time = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
+        DateTime now = DateTime.UtcNow;
+        const string fmt = "yyyy-MM-ddTHH:mm:ss.fffZ";
 
+        string time = now.ToString(fmt);
+
+        // Trenutak isteka MORA biti u buducnosti. Poruka koja je pri dolasku
+        // vec istekla odbacuje se prije nego sto se brisanje primijeni, sto
+        // objasnjava neuspjeh ranijih pokusaja sa stale == time i stale < start.
+        string stale = now.AddHours(1).ToString(fmt);
+
+        // Redoslijed elemenata slijedi primjer za koji je poznato da radi:
+        // detail dolazi prije point.
         string xml =
-            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
+            "<?xml version=\"1.0\" standalone=\"yes\"?>" +
             $"<event version=\"2.0\" uid=\"{Guid.NewGuid()}\" type=\"t-x-d-d\"" +
-            $" time=\"{time}\" start=\"{time}\" stale=\"{time}\" how=\"m-g\">" +
-            "<point lat=\"0\" lon=\"0\" hae=\"0\" ce=\"9999999\" le=\"9999999\"/>" +
+            $" time=\"{time}\" start=\"{time}\" stale=\"{stale}\" how=\"m-g\">" +
             "<detail>" +
             $"<link uid=\"{EscapeXml(uid)}\" relation=\"none\" type=\"none\"/>" +
             "<__forcedelete/>" +
             "</detail>" +
+            "<point lat=\"0\" lon=\"0\" hae=\"0\" ce=\"9999999\" le=\"9999999\"/>" +
             "</event>";
 
         tcpSender.SendCot(xml);
@@ -267,6 +277,22 @@ public class CotSender : MonoBehaviour
         {
             SendDeleteCoT(ent.uid);
         }
+    }
+
+    [ContextMenu("Test: obriši prvi prijavljeni entitet")]
+    private void DebugDeleteFirstEntity()
+    {
+        if (_entities.Count == 0)
+        {
+            Debug.LogWarning("[CotSender] Nema prijavljenih entiteta.");
+            return;
+        }
+
+        CotEntity entity = _entities[0];
+        Debug.Log($"[CotSender] TEST brisanja: '{entity.callsign}' ({entity.uid})");
+
+        UnregisterEntity(entity.uid);
+        SendDeleteCoT(entity.uid);
     }
 
 
